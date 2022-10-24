@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>XXI Century. CC report Module</title>
+    <link rel="shortcut icon" href="images/icon.png" type="image/x-icon">
+</head>
+<body>
+    <div th:object="${applicationSettings}">
+
+        <p th:text="*{activeProfile}"></p>
+        <p th:text="*{limit}"></p>
+        <p th:text="*{type}">text</p>
+        <p th:text="*{targetFile}">sourceFile</p>
+
+    </div>
+    <div>
+        <a th:href="@{applicationSettings.targetFile}" download>download</a>
+        <a th:href="@{/home}">На главную</a>
+    </div>
+
+</body>
+</html>

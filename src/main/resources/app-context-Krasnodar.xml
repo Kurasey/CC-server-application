@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/context 
+                            http://www.springframework.org/schema/context/spring-context.xsd"
+        profile="Krasnodar"
+        default-lazy-init="true">
+
+    <context:component-scan base-package="me.t.kaurami"/>
+
+    <bean id="nameTrimmingPattern" class="java.lang.String">
+        <constructor-arg index="0" value="^.+ИП|^.+ООО|^.+ПАО|^.+ЗАО|^.+МУП|^.+ГБУ|^.+СПК|^.+ОАО"/>
+    </bean>
+
+    <bean id="volumeFormingSetting" class="me.t.kaurami.service.setting.ReportSetting">
+        <property name="columnsReport">
+            <list>
+                <value>Наименование</value>
+                <value>Нал./Б/н ( в т.ч. накладные белые или черные)</value>
+                <value>ТО(за последние три месяца), руб.</value>
+                <value>Общий Лимит, руб.</value>
+                <value>Отсрочка</value>
+                <value>ИНН</value>
+                <value>Оборачиваемость, дн</value>
+                <value>Рент, %</value>
+                <value>Комментарии КК</value>
+                <value>Комментариии СБ</value>
+            </list>
+        </property>
+        <property name="numericFormat">
+            <list>
+                <value>2</value>
+                <value>3</value>
+            </list>
+        </property>
+        <property name="sheetName">
+            <value>Список</value>
+        </property>
+        <property name="mathingFieldsAndColumns">
+            <map>
+                <entry key="name" value="0"/>
+                <entry key="summaryTurnover" value="2"/>
+                <entry key="summaryCreditLine" value="3"/>
+                <entry key="deferredPayment" value="4"/>
+                <entry key="idividualTaxpayerNumber" value="5"/>
+            </map>
+        </property>
+        <property name="valueToNumeric">
+            <list>
+                <value>2</value>
+                <value>3</value>
+                <value>4</value>
+                <value>5</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ckeckingRelationship" class="me.t.kaurami.service.setting.ReportSetting">
+        <property name="columnsReport">
+            <list>
+                <value>Наименование</value>
+                <value>ИНН</value>
+                <value>Точки с КУ</value>
+                <value>Предоплатные точки</value>
+                <value>Не действующие точки</value>
+                <value>Связанные точки</value>
+                <value>Связанные точки c КУ</value>
+                <value>Связанные предоплатные точки</value>
+                <value>Связанные не действующие</value>
+                <value>Хозяева сети</value>
+                <value>Рекомендации</value>
+            </list>
+        </property>
+        <property name="numericFormat">
+            <list>
+                <value>2</value>
+                <value>3</value>
+                <value>4</value>
+                <value>5</value>
+                <value>6</value>
+                <value>7</value>
+                <value>8</value>
+            </list>
+        </property>
+        <property name="sheetName">
+            <value>Список</value>
+        </property>
+        <property name="mathingFieldsAndColumns">
+            <map>
+                <entry key="name" value="0"/>
+                <entry key="individualTaxpayerNumber" value="1"/>
+                <entry key="validMarketsWithCredit" value="2"/>
+                <entry key="validMarketsWithoutCredit" value="3"/>
+                <entry key="notValidMarkets" value="4"/>
+                <entry key="asociatedClient" value="5"/>
+                <entry key="associatedWithCredit" value="6"/>
+                <entry key="associatedWithoutCredit" value="7"/>
+                <entry key="associatedNotValidMarket" value="8"/>
+                <entry key="associatedNames" value="9"/>
+                <entry key="recomendation" value="10"/>
+            </map>
+        </property>
+        <property name="valueToNumeric">
+            <list>
+                <value>2</value>
+                <value>3</value>
+                <value>4</value>
+                <value>5</value>
+                <value>6</value>
+                <value>7</value>
+                <value>8</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>

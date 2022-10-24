@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html hmlns="http://www.w3.org/1999/html"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>XXI Century. CC report Module</title>
+        <link rel="shortcut icon" href="images/icon.png" type="image/x-icon">
+    </head>
+
+    <body>
+        <h1>Укажите профиль приложения из списка:</h1>
+        <form method="post" th:object="${applicationSettings}" action="types">
+            <div th:each="p: ${@profiles.values}">
+                <input th:field="*{activeProfile}" type="radio"
+                       th:value="${p}">
+                <span th:text="${p.name}">profileName</span>
+            </div>
+            <div>
+                <button>Далее</button>
+            </div>
+        </form>
+
+
+    </body>
+</html>
+
+
+

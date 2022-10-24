@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html hmlns="http://www.w3.org/1999/html"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>XXI Century. CC report Module</title>
+        <link rel="shortcut icon" href="images/icon.png" type="image/x-icon">
+    </head>
+    <body>
+        <form method="post" th:object="${applicationSettings}" action="nextStep">
+            <div th:each="type: ${reportTypes}">
+                <input th:field="*{type}" type="radio"
+                       th:value="${type}">
+                <span th:text="${type.name}">typeName</span>
+            </div>
+            <div>
+                <button>Далее</button>
+            </div>
+        </form>
+
+    </body>
+</html>

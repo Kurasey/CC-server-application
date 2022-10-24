@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/util
+                            http://www.springframework.org/schema/util/spring-util.xsd">
+
+<!--    <bean id="appSetting" class="me.t.kaurami.service.setting.AppSetting">-->
+<!--        <property name="avaliableProfiles">-->
+<!--            <ref bean="profiles"/>-->
+<!--        </property>-->
+<!--    </bean>-->
+
+    <util:map id="profiles" value-type="me.t.kaurami.service.setting.Profile">
+        <entry key="Волгоград">
+            <ref bean="profileVolgograd"/>
+        </entry>
+        <entry key="Краснодар">
+            <ref bean="profileKrasnodar"/>
+        </entry>
+        <entry key="Ростов">
+            <ref bean="profileRostov"/>
+        </entry>
+    </util:map>
+
+<!--    <util:list id="profiles" value-type="me.t.kaurami.service.setting.Profile">
+        <ref bean="profileVolgograd"/>
+        <ref bean="profileKrasnodar"/>
+        <ref bean="profileRostov"/>
+    </util:list>-->
+
+    <bean id="profileKrasnodar" class="me.t.kaurami.service.setting.Profile">
+        <property name="name" value="Краснодар"/>
+        <property name="xmlConfig" value="app-context-Krasnodar.xml"/>
+        <property name="innerName" value="Krasnodar"/>
+    </bean>
+
+    <bean id="profileRostov" class="me.t.kaurami.service.setting.Profile">
+        <property name="name" value="Ростов"/>
+        <property name="xmlConfig" value="app-context-Rostov.xml"/>
+        <property name="innerName" value="Rostov-on-Don"/>
+    </bean>
+
+    <bean id="profileVolgograd" class="me.t.kaurami.service.setting.Profile">
+        <property name="name" value="Волгоград"/>
+        <property name="xmlConfig" value="app-context-Volgograd.xml"/>
+        <property name="innerName" value="Volgograd"/>
+    </bean>
+
+    <bean id="textBean" class="java.lang.String">
+        <constructor-arg index="0" value="text"/>
+    </bean>
+
+</beans>
