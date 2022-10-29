@@ -8,7 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-@Service("standardBookWriter")
+@Service
 public class StandardBookWriter implements BookWriter {
 
     public void writeBook(String path, Workbook workbook){

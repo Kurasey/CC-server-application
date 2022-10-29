@@ -11,11 +11,6 @@ public class SpringDemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringDemoApplication.class, args);
-		try{
-			Main.main(null);
-		}catch (Exception e){
-			System.err.println(e);
-		}
 	}
 
 

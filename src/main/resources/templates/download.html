@@ -7,16 +7,16 @@
     <link rel="shortcut icon" href="images/icon.png" type="image/x-icon">
 </head>
 <body>
-    <div th:object="${applicationSettings}">
+    <div th:object="${settingHolder}">
 
-        <p th:text="*{activeProfile}"></p>
+        <p th:text="*{districtName}"></p>
         <p th:text="*{limit}"></p>
         <p th:text="*{type}">text</p>
         <p th:text="*{targetFile}">sourceFile</p>
 
     </div>
     <div>
-        <a th:href="@{applicationSettings.targetFile}" download>download</a>
+        <a th:href="@{settingHolder.targetFile}" download>download</a>
         <a th:href="@{/home}">На главную</a>
     </div>
 

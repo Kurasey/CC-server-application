@@ -3,19 +3,10 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:context="http://www.springframework.org/schema/context"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
-                            http://www.springframework.org/schema/beans/spring-beans.xsd
-                            http://www.springframework.org/schema/context 
-                            http://www.springframework.org/schema/context/spring-context.xsd"
-        profile="Krasnodar"
+                            http://www.springframework.org/schema/beans/spring-beans.xsd"
         default-lazy-init="true">
 
-    <context:component-scan base-package="me.t.kaurami"/>
-
-    <bean id="nameTrimmingPattern" class="java.lang.String">
-        <constructor-arg index="0" value="^.+ИП|^.+ООО|^.+ПАО|^.+ЗАО|^.+МУП|^.+ГБУ|^.+СПК|^.+ОАО"/>
-    </bean>
-
-    <bean id="volumeFormingSetting" class="me.t.kaurami.service.setting.ReportSetting">
+    <bean id="volumeFormingSettingsKrasnodar" class="me.t.kaurami.service.setting.ReportFileParameters">
         <property name="columnsReport">
             <list>
                 <value>Наименование</value>
@@ -58,7 +49,7 @@
         </property>
     </bean>
 
-    <bean id="ckeckingRelationship" class="me.t.kaurami.service.setting.ReportSetting">
+    <bean id="relationCheckingSettingsKrasnodar" class="me.t.kaurami.service.setting.ReportFileParameters">
         <property name="columnsReport">
             <list>
                 <value>Наименование</value>
@@ -95,12 +86,12 @@
                 <entry key="validMarketsWithCredit" value="2"/>
                 <entry key="validMarketsWithoutCredit" value="3"/>
                 <entry key="notValidMarkets" value="4"/>
-                <entry key="asociatedClient" value="5"/>
+                <entry key="associatedClient" value="5"/>
                 <entry key="associatedWithCredit" value="6"/>
                 <entry key="associatedWithoutCredit" value="7"/>
                 <entry key="associatedNotValidMarket" value="8"/>
                 <entry key="associatedNames" value="9"/>
-                <entry key="recomendation" value="10"/>
+                <entry key="recommendation" value="10"/>
             </map>
         </property>
         <property name="valueToNumeric">

@@ -1,17 +1,13 @@
 package me.t.kaurami.controller;
 
-import me.t.kaurami.service.setting.AppSetting;
-import me.t.kaurami.service.setting.PreReportSetting;
+import me.t.kaurami.service.setting.SettingHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-@SessionAttributes("applicationSettings")
+@SessionAttributes("settingHolder")
 @RequestMapping()
 @Controller
 public class ReportTypeController {
@@ -22,14 +18,14 @@ public class ReportTypeController {
     }
 
 
-    @PostMapping("nextStep")
-    public /*@ResponseBody*/ String handleFileUpload(@ModelAttribute("applicationSettings") AppSetting appSetting) throws Exception{
+    @PostMapping("typess")
+    public /*@ResponseBody*/ String handleFileUpload(@ModelAttribute("settingHolder") SettingHolder appSetting) throws Exception{
         return "redirect:/reportSetting";
     }
 
     @ModelAttribute("reportTypes")
-    private List<PreReportSetting.ReportType> reportTypes(){
-        return Arrays.asList(PreReportSetting.ReportType.values());
+    private List<SettingHolder.ReportType> reportTypes(){
+        return Arrays.asList(SettingHolder.ReportType.values());
     }
 
 

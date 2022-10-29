@@ -1,8 +1,11 @@
 package me.t.kaurami.service.reportCreator;
 
 import me.t.kaurami.entities.Exportable;
-import me.t.kaurami.entities.MarketOwner;
-import me.t.kaurami.entities.MarketOwnerVolumeForming;
+import me.t.kaurami.entities.Marowner;
+import me.t.kaurami.entities.MarownerForRelationshipChecker;
+import me.t.kaurami.entities.MarownerVolumeForming;
+import me.t.kaurami.service.setting.SettingHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -10,6 +13,8 @@ import java.util.stream.Collectors;
 
 @Service("reportCreatorVF")
 public class ReportCreatorVolumeFormingClientList implements ReportCreator {
+
+    private SettingHolder settingHolder;
     private LinkedList<LinkedList<String>> data;
     private long creditLimitLevel;
     private HashMap<String, Integer> columnNumbers = new HashMap<>();
@@ -20,6 +25,11 @@ public class ReportCreatorVolumeFormingClientList implements ReportCreator {
         put("ЛимКред_из_карт","summaryCreditLine");
         put("Кл_ИНН","idividualTaxpayerNumber");
     }};
+
+    @Autowired
+    public void setSettingHolder(SettingHolder settingHolder) {
+        this.settingHolder = settingHolder;
+    }
 
     @Override
     public void setData(LinkedList<LinkedList<String>> data) {
@@ -34,9 +44,9 @@ public class ReportCreatorVolumeFormingClientList implements ReportCreator {
     @Override
     public List<Exportable> createReport(){
         fillColumnNumbers(columnsVolumeForming);
-        HashMap<String, MarketOwnerVolumeForming> ownersHashMap = new HashMap<>();
+        HashMap<String, MarownerVolumeForming> ownersHashMap = new HashMap<>();
         String idividualTaxpayerNumber;
-        System.out.println(data);
+        MarownerForRelationshipChecker.setNamePattern(settingHolder.getNamePattern());
         data.removeFirst();
         for (LinkedList<String> linkedList: data){
             idividualTaxpayerNumber = linkedList.get(columnNumbers.get("idividualTaxpayerNumber"));
@@ -46,7 +56,7 @@ public class ReportCreatorVolumeFormingClientList implements ReportCreator {
                         parseInt(linkedList.get(columnNumbers.get("defrredPayment"))),
                         parseInt(linkedList.get(columnNumbers.get("summaryTurnover"))));
             }else {
-                ownersHashMap.put(idividualTaxpayerNumber, new MarketOwnerVolumeForming(
+                ownersHashMap.put(idividualTaxpayerNumber, new MarownerVolumeForming(
                         linkedList.get(columnNumbers.get("name")),
                         idividualTaxpayerNumber,
                         parseInt(linkedList.get(columnNumbers.get("summaryCreditLine"))),
@@ -56,7 +66,7 @@ public class ReportCreatorVolumeFormingClientList implements ReportCreator {
         }
         List<Exportable> volumeFormingClientList = ownersHashMap.values().stream()
                 .filter(e->e.getSummaryCreditLine() >= creditLimitLevel)
-                .sorted(MarketOwner::compareTo)
+                .sorted(Marowner::compareTo)
                 .collect(Collectors.toList());
 
         return volumeFormingClientList;

@@ -1,27 +1,27 @@
 package me.t.kaurami.service.bookEditor;
 
 import me.t.kaurami.entities.Exportable;
-import me.t.kaurami.service.setting.ReportSetting;
+import me.t.kaurami.service.setting.ReportFileParameters;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Service("bookEditor")
+@Service
 public class BookEditorVolumeFormingClientList implements BookEditor {
     private Workbook workbook;
     private Sheet sheet;
     private Row row;
     private Cell cell;
-    private ReportSetting setting;
+    private ReportFileParameters setting;
 
     @Override
     public void setWorkbook(Workbook workbook) {
         this.workbook = workbook;
     }
 
-    public void setSetting(ReportSetting setting) {
+    public void setSetting(ReportFileParameters setting) {
         this.setting = setting;
     }
 

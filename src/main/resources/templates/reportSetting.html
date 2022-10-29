@@ -8,14 +8,14 @@
 </head>
 <body>
     <h1>Параметры отчета</h1>
-    <form method="post" th:object="${applicationSettings}" enctype="multipart/form-data" action="createReport">
+    <form method="post" th:object="${settingHolder}" enctype="multipart/form-data" action="reportSetting">
         <div>
             Порог кредитного лимита:
             <input th:field="*{limit}" type="text">
         </div>
         <div>
             Файл с исходными данными:
-            <input type="file" name="file">
+            <input type="file" name="sourceFile">
         </div>
         <div>
             <button>Пуск</button>

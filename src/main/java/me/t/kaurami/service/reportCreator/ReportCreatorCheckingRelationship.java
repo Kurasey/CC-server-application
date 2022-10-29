@@ -1,9 +1,10 @@
 package me.t.kaurami.service.reportCreator;
 
 import me.t.kaurami.entities.Exportable;
-import me.t.kaurami.entities.MarketOwner;
-import me.t.kaurami.entities.MarketOwnerForRelationshipChecker;
-import org.springframework.context.annotation.Profile;
+import me.t.kaurami.entities.Marowner;
+import me.t.kaurami.entities.MarownerForRelationshipChecker;
+import me.t.kaurami.service.setting.SettingHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -11,7 +12,9 @@ import java.util.stream.Collectors;
 
 @Service("reportCreatorCR")
 public class ReportCreatorCheckingRelationship implements ReportCreator {
-    LinkedList<LinkedList<String>> data;
+
+    private SettingHolder settingHolder;
+    private LinkedList<LinkedList<String>> data;
     private HashMap<String, Integer> columnNumbers = new HashMap<>();
     private HashMap<String, List<String>> columnsReport = new HashMap<String,  List<String>>(){{
         put("status", Arrays.asList("Статус"));
@@ -21,6 +24,11 @@ public class ReportCreatorCheckingRelationship implements ReportCreator {
         put("creditLine",Arrays.asList("Лимит (Сумма)"));
         put("ownerName", Arrays.asList("Хозяин (сети):"));
     }};
+
+    @Autowired
+    public void setSettingHolder(SettingHolder settingHolder) {
+        this.settingHolder = settingHolder;
+    }
 
     @Override
     public void setData(LinkedList<LinkedList<String>> data) {
@@ -35,11 +43,12 @@ public class ReportCreatorCheckingRelationship implements ReportCreator {
     @Override
     public List<Exportable> createReport() {
         fillColumnNumbers(columnsReport);
-        HashMap<String, MarketOwnerForRelationshipChecker> ownerHashMap = new HashMap<>();
+        HashMap<String, MarownerForRelationshipChecker> ownerHashMap = new HashMap<>();
         data.removeFirst();
         String individualTaxpayerNumber;
-        MarketOwnerForRelationshipChecker owner;
-        ownerHashMap.put("", new MarketOwnerForRelationshipChecker("Клиенты без ИНН", ""));
+        MarownerForRelationshipChecker.setNamePattern(settingHolder.getNamePattern());
+        MarownerForRelationshipChecker owner;
+        ownerHashMap.put("", new MarownerForRelationshipChecker("Клиенты без ИНН", ""));
         for (LinkedList<String> list: data){
             individualTaxpayerNumber = list.get(columnNumbers.get("individualTaxpayerNumber"));
             if (ownerHashMap.containsKey(individualTaxpayerNumber)){
@@ -49,7 +58,7 @@ public class ReportCreatorCheckingRelationship implements ReportCreator {
                         list.get(columnNumbers.get("creditLine")),
                         list.get(columnNumbers.get("ownerName")));
             }else {
-                owner = new MarketOwnerForRelationshipChecker(
+                owner = new MarownerForRelationshipChecker(
                         list.get(columnNumbers.get("name")),
                         list.get(columnNumbers.get("individualTaxpayerNumber")));
                 owner.updateValues(list.get(columnNumbers.get("status")),
@@ -59,7 +68,7 @@ public class ReportCreatorCheckingRelationship implements ReportCreator {
                 ownerHashMap.put(individualTaxpayerNumber, owner);
             }
         }
-        List<Exportable> exportables = ownerHashMap.values().stream().sorted(MarketOwner::compareTo).collect(Collectors.toList());
+        List<Exportable> exportables = ownerHashMap.values().stream().sorted(Marowner::compareTo).collect(Collectors.toList());
         return exportables;
     }
 
@@ -72,30 +81,4 @@ public class ReportCreatorCheckingRelationship implements ReportCreator {
             }
         }
     }
-
-  /*  private void updateOwnerStatus(List<String> list, MarketOwnerForRelationshipChecker owner){
-
-        if (list.get(columnNumbers.get("status")).equals("Действующая")){
-            if ((parseLong(list.get(columnNumbers.get("defrredPayment"))))>2 && (parseLong(list.get(columnNumbers.get("creditLine"))))>1){
-                owner.addValidMarketsWithCredit();
-            }else {
-                owner.addValidMarketsWithoutCredit();
-            }
-        }else {
-            owner.addNotValidMarkets();
-        }
-        if (list.get(columnNumbers.get("ownerName"))!=null && list.get(columnNumbers.get("ownerName")).length()>1){
-            owner.addAsociatedClient();
-        }
-    }
-
-
-    private long parseLong(String value){
-        try {
-            Float f = Float.valueOf(value);
-            return f.longValue();
-        }catch (Exception e){
-            return 2;
-        }
-    }*/
 }

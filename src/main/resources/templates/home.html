@@ -9,11 +9,11 @@
 
     <body>
         <h1>Укажите профиль приложения из списка:</h1>
-        <form method="post" th:object="${applicationSettings}" action="types">
-            <div th:each="p: ${@profiles.values}">
-                <input th:field="*{activeProfile}" type="radio"
-                       th:value="${p}">
-                <span th:text="${p.name}">profileName</span>
+        <form method="post" th:object="${settingHolder}" action="types">
+            <div th:each="p: ${@availableDistricts.entrySet}">
+                <input th:field="*{districtName}" type="radio"
+                       th:value="${p.getKey}">
+                <span th:text="${p.getValue}">profileName</span>
             </div>
             <div>
                 <button>Далее</button>

@@ -1,21 +1,16 @@
 package me.t.kaurami.entities;
 
-import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 
-public class MarketOwnerVolumeForming extends MarketOwner implements Exportable {
+public class MarownerVolumeForming extends Marowner implements Exportable {
 
-//    private String name;
     private String idividualTaxpayerNumber;
     private int marketCount;
     private int summaryCreditLine;
     private int deferredPayment;
     private int summaryTurnover;
-/*    private String namePattern = "^.+ИП|^.+ООО|^.+ПАО|^.+ЗАО|^.+МУП|^.+ГБУ";
-    Matcher matcher;*/
 
-    public MarketOwnerVolumeForming(String name, String idividualTaxpayerNumber, int summaryCreditLine, int deferredPayment, int summaryTurnover) {
+    public MarownerVolumeForming(String name, String idividualTaxpayerNumber, int summaryCreditLine, int deferredPayment, int summaryTurnover) {
         super(name);
         if (isCorrectITN(idividualTaxpayerNumber)){
             this.idividualTaxpayerNumber = idividualTaxpayerNumber;
@@ -34,10 +29,6 @@ public class MarketOwnerVolumeForming extends MarketOwner implements Exportable 
         this.deferredPayment = deferredPayment > this.deferredPayment ? deferredPayment : this.deferredPayment;
         this.summaryTurnover += summaryTurnover;
     }
-
-//    public String getName() {
-//        return name;
-//    }
 
     public String getIdividualTaxpayerNumber() {
         return idividualTaxpayerNumber;
@@ -61,7 +52,7 @@ public class MarketOwnerVolumeForming extends MarketOwner implements Exportable 
 
     public HashMap<String, String> toExport(){
         HashMap<String, String> values = new HashMap<String, String>(){{
-            put("name",getName());
+            put("name", getName());
             put("idividualTaxpayerNumber",idividualTaxpayerNumber);
             put("marketCount", Integer.toString(marketCount));
             put("summaryCreditLine", Integer.toString(summaryCreditLine));
@@ -71,14 +62,6 @@ public class MarketOwnerVolumeForming extends MarketOwner implements Exportable 
 
         return values;
     }
-
-/*    private String correctName(String name){
-        matcher = Pattern.compile(getNamePattern()).matcher(name);
-        if (matcher.find()){
-            return matcher.group();
-        }
-        return name;
-    }*/
 
     private boolean isCorrectITN(String idividualTaxpayerNumber){
         if (idividualTaxpayerNumber.matches("\\d+")){

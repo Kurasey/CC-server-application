@@ -1,18 +1,23 @@
 package me.t.kaurami.controller;
 
-import me.t.kaurami.service.setting.AppSetting;
+import me.t.kaurami.service.setting.SettingHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 
 @RequestMapping("/")
-@SessionAttributes("applicationSettings")
+@SessionAttributes("settingHolder")
 @Controller
 public class HomeController{
 
-    @ModelAttribute("applicationSettings")
-    private AppSetting getAppSetting(){
-        return new AppSetting();
+    private SettingHolder settingHolder;
+
+    public HomeController(SettingHolder settingHolder) {
+        this.settingHolder = settingHolder;
+    }
+
+    @ModelAttribute("settingHolder")
+    private SettingHolder getAppSetting(){
+        return settingHolder;
     }
 
     @GetMapping
@@ -21,7 +26,8 @@ public class HomeController{
     }
 
     @PostMapping("types")
-    public String chooseProfile(@ModelAttribute("applicationSettings") AppSetting appSetting){
+    public String chooseProfile(@ModelAttribute("settingHolder") SettingHolder settingHolder) throws Exception{
+        settingHolder.setActiveSettings();
         return "redirect:/types";
     }
 

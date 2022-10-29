@@ -1,0 +1,4 @@
+market-owner:
+  name-pattern: ^.+ИП|^.+ООО|^.+ПАО|^.+ЗАО|^.+МУП|^.+ГБУ
+  name-Pattern: t
+  test: 1
