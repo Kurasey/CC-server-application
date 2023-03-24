@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:util="http://www.springframework.org/schema/util"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:context="http://www.springframework.org/schema/context"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
-                            http://www.springframework.org/schema/beans/spring-beans.xsd"
+                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/util
+                            http://www.springframework.org/schema/util/spring-util.xsd"
         default-lazy-init="true">
 
-    <bean id="volumeFormingSettingsKrasnodar" class="me.t.kaurami.service.setting.ReportFileParameters">
+    <util:map id="formatHolders" map-class="java.util.HashMap">
+        <entry key="VOLUME_FORMING" value-ref="volumeFormingFormatSettings"/> <!-- Добавить formatHolder во избежание дубликатов в разных map? -->
+        <entry key="CHECKING_RELATIONSHIP" value-ref="relationCheckingFormatSettings"/>
+    </util:map>
+
+    <bean id="volumeFormingFormatSettings" class="me.t.kaurami.service.setting.ReportFormatHolder">
         <property name="columnsReport">
             <list>
                 <value>Наименование</value>
@@ -49,7 +56,7 @@
         </property>
     </bean>
 
-    <bean id="relationCheckingSettingsKrasnodar" class="me.t.kaurami.service.setting.ReportFileParameters">
+    <bean id="relationCheckingFormatSettings" class="me.t.kaurami.service.setting.ReportFormatHolder">
         <property name="columnsReport">
             <list>
                 <value>Наименование</value>

@@ -1,32 +1,44 @@
 package me.t.kaurami.service.bookEditor;
 
 import me.t.kaurami.entities.Exportable;
-import me.t.kaurami.service.setting.ReportFileParameters;
+import me.t.kaurami.service.setting.ReportFormatHolder;
+import me.t.kaurami.service.setting.SettingHolder;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 @Service
-public class BookEditorVolumeFormingClientList implements BookEditor {
+public class StandardBookEditor implements BookEditor {
     private Workbook workbook;
     private Sheet sheet;
     private Row row;
     private Cell cell;
-    private ReportFileParameters setting;
+    private ReportFormatHolder setting;
+    private Map<String, ReportFormatHolder> formatHolderMap;
 
     @Override
     public void setWorkbook(Workbook workbook) {
         this.workbook = workbook;
     }
 
-    public void setSetting(ReportFileParameters setting) {
+
+    @Resource(name = "formatHolders")
+    public void setFormatHolderMap(Map<String, ReportFormatHolder> formatHolderMap) {
+        this.formatHolderMap = formatHolderMap;
+    }
+
+    @Deprecated
+    public void setSetting(ReportFormatHolder setting) {
         this.setting = setting;
     }
 
     @Override
-    public void writeReport(List<Exportable> report/*refactor to interface*/){
+    public void createReportFile(List<Exportable> report/*refactor to interface*/){
         if (workbook==null){
             workbook = new XSSFWorkbook();
         }
@@ -50,6 +62,12 @@ public class BookEditorVolumeFormingClientList implements BookEditor {
             }
         }
         editReportSheet();
+    }
+
+    @Override
+    public boolean setReportType(SettingHolder.ReportType reportType) {
+        setting = formatHolderMap.get(reportType.toString());
+        return true;
     }
 
     private void editReportSheet(){

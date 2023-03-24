@@ -12,7 +12,7 @@ import java.io.OutputStream;
 public class StandardBookWriter implements BookWriter {
 
     public void writeBook(String path, Workbook workbook){
-        try(OutputStream os = new FileOutputStream(path+".xlsx")){
+        try(OutputStream os = new FileOutputStream(path + ".xlsx")){
             workbook.write(os);
         }catch (FileNotFoundException e){
             System.err.println(e);

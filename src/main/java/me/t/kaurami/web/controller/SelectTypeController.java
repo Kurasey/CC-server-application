@@ -1,4 +1,4 @@
-package me.t.kaurami.controller;
+package me.t.kaurami.web.controller;
 
 import me.t.kaurami.service.setting.SettingHolder;
 import org.springframework.stereotype.Controller;
@@ -8,25 +8,35 @@ import java.util.Arrays;
 import java.util.List;
 
 @SessionAttributes("settingHolder")
-@RequestMapping()
+@RequestMapping("/reportmodule/selecttype")
 @Controller
-public class ReportTypeController {
+public class SelectTypeController {
 
-    @GetMapping("/types")
+    private SettingHolder settingHolder;
+
+    public SelectTypeController(SettingHolder settingHolder) {
+        this.settingHolder = settingHolder;
+    }
+
+    @ModelAttribute("settingHolder")
+    private SettingHolder getSettingHolder(){
+        return settingHolder;
+    }
+
+    @GetMapping()
     public String getForm(){
-        return "types";
+        return "selecttype";
     }
 
 
-    @PostMapping("typess")
+    @PostMapping()
     public /*@ResponseBody*/ String handleFileUpload(@ModelAttribute("settingHolder") SettingHolder appSetting) throws Exception{
-        return "redirect:/reportSetting";
+        return "redirect:/reportmodule/reportparameters";
     }
 
     @ModelAttribute("reportTypes")
     private List<SettingHolder.ReportType> reportTypes(){
         return Arrays.asList(SettingHolder.ReportType.values());
     }
-
 
 }

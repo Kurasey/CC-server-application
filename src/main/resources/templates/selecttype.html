@@ -7,7 +7,7 @@
         <link rel="shortcut icon" href="images/icon.png" type="image/x-icon">
     </head>
     <body>
-        <form method="post" th:object="${settingHolder}" action="typess">
+        <form method="post" th:object="${settingHolder}" th:action="@{/reportmodule/selecttype}">
             <div th:each="type: ${reportTypes}">
                 <input th:field="*{type}" type="radio"
                        th:value="${type}">

@@ -9,15 +9,16 @@
 <body>
     <div th:object="${settingHolder}">
 
-        <p th:text="*{districtName}"></p>
         <p th:text="*{limit}"></p>
         <p th:text="*{type}">text</p>
         <p th:text="*{targetFile}">sourceFile</p>
+        <a th:href="*{targetFile}" download>download1</a>
+
 
     </div>
     <div>
         <a th:href="@{settingHolder.targetFile}" download>download</a>
-        <a th:href="@{/home}">На главную</a>
+        <a th:href="@{/}">На главную</a>
     </div>
 
 </body>

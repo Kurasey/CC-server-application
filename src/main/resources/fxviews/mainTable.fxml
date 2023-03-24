@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="Pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1330.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <children>
+        <!-- Таблица в которую мы будем выводит наш pojo -->
+        <TableView fx:id="tableUsers" layoutX="12.0" layoutY="268.0" prefHeight="437.0" prefWidth="1330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="268.0">
+            <columns>
+                <!-- Колонки таблицы -->
+                <TableColumn fx:id="ColumnID" prefWidth="26.999969482421875" text="№" />
+            <TableColumn fx:id="ColumnDate" prefWidth="118.0" text="Дата" />
+                <TableColumn fx:id="ColumnAgentName" prefWidth="131.0" text="Агент" />
+                <TableColumn fx:id="passwordColumn" minWidth="6.0" prefWidth="423.0" text="Клиент">
+               <columns>
+                  <TableColumn fx:id="ColumnClientINN" prefWidth="95.0" text="ИНН" />
+                  <TableColumn fx:id="ColumnClientName" prefWidth="147.0" text="Имя" />
+                  <TableColumn fx:id="ColumnClientOwner" prefWidth="165.0" text="Хозяин сети" />
+               </columns></TableColumn>
+            <TableColumn maxWidth="610.0" minWidth="-1.0" prefWidth="125.0" text="Запрос">
+               <columns>
+                  <TableColumn fx:id="ColumnRequestOperation" prefWidth="167.0" text="Оперция" />
+                  <TableColumn fx:id="ColumnRequestComment" prefWidth="156.0" text="Комментарий" />
+                  <TableColumn fx:id="ColumnRequestDesicion" prefWidth="103.0" text="Решение" />
+                  <TableColumn fx:id="ColumnRequestCause" prefWidth="92.0" text="Основание" />
+                  <TableColumn fx:id="ColumnRequestReminde" prefWidth="92.0" text="Напоминание" />
+               </columns></TableColumn>
+            </columns>
+        </TableView>
+      <Button fx:id="ButtonCreateRequest" layoutX="499.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleButtonCreateRequest" style="-fx-background-color: #373737;" text="Добавить" textFill="#f4f4f4" textOverrun="CLIP" />
+      <MenuBar layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="1310.0">
+         <menus>
+            <Menu fx:id="MenuFile" mnemonicParsing="false" text="Файл">
+               <items>
+                  <MenuItem fx:id="MenuLoadDataFromTextFile" mnemonicParsing="false" onAction="#handleMenuLoadDataFromTextFile" text="Импорт из текстовых файлов" />
+                  <MenuItem fx:id="MenuLoadDataFromTextExcel" mnemonicParsing="false" onAction="#handleMenuLoadDataFromExcel" text="Импорт из Excel" />
+                  <MenuItem fx:id="MenuExportData" mnemonicParsing="false" onAction="#handleMenuExportData" text="Экспорт БД" />
+                  <MenuItem fx:id="MenuUpdateFromExcel" mnemonicParsing="false" onAction="#handleMenuUpdateFromExcel" text="Обновить БД из Excel" />
+                  <MenuItem fx:id="MenuSaveData" mnemonicParsing="false" onAction="#handleMenuSaveData" text="Сохранить состояние БД" />
+                  <MenuItem fx:id="MenuRefreshLinks" mnemonicParsing="false" onAction="#handleMenuRefreshLinks" text="Обновить связи Агент-Клиент" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <Menu mnemonicParsing="false" text="Файлы для импорта">
+                     <items>
+                        <MenuItem fx:id="MenuSetAgentData" mnemonicParsing="false" onAction="#handleMenuSetAgentData" text="Агенты (.txt)" />
+                        <MenuItem fx:id="MenuSetClientData" mnemonicParsing="false" onAction="#handleMenuSetClientData" text="Клиенты (.txt)" />
+                        <MenuItem fx:id="MenuSetExcelFromAccessData" mnemonicParsing="false" onAction="#handleMenuSetExcelFromAccessData" text="Excel из Ассеss" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Очистить справочник">
+                    <items>
+                      <MenuItem fx:id="MenuClearAgentData" mnemonicParsing="false" onAction="#handleMenuClearAgentData" text="Агенты" />
+                        <MenuItem fx:id="MenuClearClientData" mnemonicParsing="false" onAction="#handleMenuClearClientData" text="Клиенты" />
+                        <MenuItem fx:id="MenuClearRequestData" mnemonicParsing="false" onAction="#handleMenuClearRequestData" text="Запросы" />
+                    </items>
+                  </Menu>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="MenuCloseApp" mnemonicParsing="false" onAction="#handleMenuCloseApp" text="Закрыть приложение" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Добавить">
+               <items>
+                  <MenuItem fx:id="MenuAddAgent" mnemonicParsing="false" onAction="#handleMenuAddAgent" text="Агент" />
+                  <MenuItem fx:id="MenuAddSourc" mnemonicParsing="false" onAction="#handleMenuAddSourc" text="Источник запросов" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="MenuAddReminde" mnemonicParsing="false" onAction="#handleMenuAddReminde" text="Напоминание" />
+                  <MenuItem fx:id="MenuAddCall" mnemonicParsing="false" onAction="#handleMenuAddCall" text="Обзвон" />
+                  <MenuItem fx:id="MenuAddDeception" mnemonicParsing="false" onAction="#handleMenuAddDeception" text="Нарушение" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Select All" />
+                  <MenuItem mnemonicParsing="false" text="Unselect All" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Справоник">
+              <items>
+                <MenuItem fx:id="MenuShowAgents" mnemonicParsing="false" onAction="#handleMenuShowAgents" text="Агенты" />
+                  <MenuItem fx:id="MenuShowClients" mnemonicParsing="false" onAction="#handleMenuShowClients" text="Клиенты" />
+                  <MenuItem fx:id="MenuShowOwners" mnemonicParsing="false" onAction="#handleMenuShowOwners" text="Хозяева сети" />
+                  <MenuItem fx:id="MenuShowSource" mnemonicParsing="false" onAction="#handleMenuShowSource" text="Истоники запросов" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="MenuShowRemindes" mnemonicParsing="false" onAction="#handleMenuShowRemindes" text="Напоминания" />
+                  <MenuItem fx:id="MenuShowDeception" mnemonicParsing="false" onAction="#handleMenuShowRemindes" text="Нарушения" />
+                  <MenuItem fx:id="MenuShowCalls" mnemonicParsing="false" onAction="#handleMenuShowCalls" text="Обзвоны" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <RadioMenuItem fx:id="MenuDarkTheme" mnemonicParsing="false" onAction="#handleMenuDarkTheme" text="Темная тема" />
+                  <MenuItem fx:id="MenuContacts" mnemonicParsing="false" onAction="#handleMenuContacts" text="Контактная информация" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <ComboBox fx:id="CBAgent" editable="true" layoutX="21.0" layoutY="70.0" onAction="#handleCBAgent" onContextMenuRequested="#handleContextCBAgent" prefHeight="25.0" prefWidth="205.0" promptText="Агент" />
+      <ComboBox fx:id="CBClient" editable="true" layoutX="21.0" layoutY="104.0" onAction="#handleCBClient" onContextMenuRequested="#handleContextCBClient" prefHeight="25.0" prefWidth="566.0" promptText="Клиент" />
+      <RadioButton fx:id="RBStop" layoutX="21.0" layoutY="139.0" mnemonicParsing="false" text="Снять стоп-лист">
+         <toggleGroup>
+            <ToggleGroup fx:id="RequestRadio" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="RBLimit" layoutX="145.0" layoutY="139.0" mnemonicParsing="false" text="Увеличить кредитный лимит" toggleGroup="$RequestRadio" />
+      <RadioButton fx:id="RBSB" layoutX="341.0" layoutY="139.0" mnemonicParsing="false" text="Направить запрос в СБ" toggleGroup="$RequestRadio" />
+      <RadioButton fx:id="RBElse" layoutX="512.0" layoutY="139.0" mnemonicParsing="false" text="Другое" toggleGroup="$RequestRadio" />
+      <TextField fx:id="TBComment" layoutX="21.0" layoutY="168.0" prefHeight="25.0" prefWidth="566.0" promptText="Комментарий" />
+      <ComboBox fx:id="CBSource" editable="true" layoutX="243.0" layoutY="70.0" onAction="#handleCBSource" onContextMenuRequested="#handleContextCBSource" prefWidth="150.0" />
+      <DatePicker fx:id="CDate" layoutX="413.0" layoutY="70.0" prefHeight="25.0" prefWidth="174.0" />
+      <Label layoutX="225.0" layoutY="46.0" text="Добавление нового запроса" />
+      <Separator layoutX="593.0" layoutY="40.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="5.0" />
+      <Separator layoutX="1.0" layoutY="239.0" prefHeight="0.0" prefWidth="592.0" />
+      <Button fx:id="ButtonChangeRequest" layoutX="24.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleButtonChangeRequest" style="-fx-background-color: #373737;" text="Изменить" textFill="WHITE" />
+      <Button fx:id="ButtonRemoveRequest" layoutX="110.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleButtonRemoveRequest" style="-fx-background-color: #373737;" text="Удалить" textFill="WHITE" />
+      <Button fx:id="ButtonRemoveForm" layoutX="183.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleButtonRemoveForm" style="-fx-background-color: #373737;" text="Очистить" textFill="WHITE" />
+      <Label layoutX="624.0" layoutY="37.0" prefHeight="35.0" prefWidth="136.0" text="Статистика" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="601.0" layoutY="75.0" text="Агентов:">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label layoutX="601.0" layoutY="90.0" text="Клиентов:">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label layoutX="601.0" layoutY="104.0" text="Запросов:">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label layoutX="617.0" layoutY="161.0" text="Запросов за последние 30 дней:">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label layoutX="620.0" layoutY="173.0" prefHeight="15.0" prefWidth="81.0" text="Запросы сегодня:">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label layoutX="608.0" layoutY="114.0" text="из них:">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label layoutX="617.0" layoutY="122.0" text="Согласовано:">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label layoutX="617.0" layoutY="133.0" text="Отказано:">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label layoutX="620.0" layoutY="147.0" prefHeight="15.0" prefWidth="81.0" text="На согласовании:">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label fx:id="StatisticAgent" layoutX="766.0" layoutY="75.0" text="0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="StatisticClient" layoutX="766.0" layoutY="90.0" text="0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="StatisticRequestAll" layoutX="766.0" layoutY="104.0" text="0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="StatisticRequestAgreed" layoutX="766.0" layoutY="122.0" text="0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="StatisticRequestDisAgreed" layoutX="766.0" layoutY="133.0" text="0">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label fx:id="StatisticRequestOnApproval" layoutX="766.0" layoutY="148.0" text="0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="StatisticRequestsLast30Days" layoutX="766.0" layoutY="161.0" text="0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="StatisticRequestsToday" layoutX="766.0" layoutY="173.0" text="0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="CHBOnlyUnprocessed" layoutX="1092.0" layoutY="246.0" mnemonicParsing="false" selected="true" text="Показывать только не обработанные" />
+      <ListView fx:id="EventListView" layoutX="807.0" layoutY="141.0" prefHeight="100.0" prefWidth="513.0" />
+      <Separator layoutX="801.0" layoutY="37.0" orientation="VERTICAL" prefHeight="200.0" />
+      <TextField fx:id="TBSearch" layoutX="8.0" layoutY="242.0" prefHeight="25.0" prefWidth="1056.0" promptText="Поиск" />
+      <Separator layoutX="601.0" layoutY="89.0" prefWidth="200.0" />
+      <Separator layoutX="601.0" layoutY="103.0" prefWidth="200.0" />
+      <Label layoutX="599.0" layoutY="194.0" prefHeight="15.0" prefWidth="93.0" text="Доля согласований">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="StatisticRequestsPastAgreed" layoutX="766.0" layoutY="194.0" text="0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Button fx:id="ButtonClearSearchBar" layoutX="1066.0" layoutY="242.0" mnemonicParsing="false" text="x" textAlignment="CENTER" />
+    </children>
+   <effect>
+      <InnerShadow />
+   </effect>
+</AnchorPane>

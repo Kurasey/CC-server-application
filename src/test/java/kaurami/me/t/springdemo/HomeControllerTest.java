@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import me.t.kaurami.controller.HomeController;
+//import me.t.kaurami.web.controller.SelectProfileController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 
 
-@WebMvcTest(HomeController.class)
+//@WebMvcTest(SelectProfileController.class)
 public class HomeControllerTest {
 
     @Autowired

@@ -4,14 +4,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public abstract class Marowner implements Comparable<Marowner> {
+public abstract class MarketOwner implements Comparable<MarketOwner> {
 
     private static String namePattern = ".+";
 
     private final String name;
     private Matcher matcher;
 
-    protected Marowner(String name) {
+    protected MarketOwner(String name) {
         this.name = correctName(name);
     }
 
@@ -33,7 +33,7 @@ public abstract class Marowner implements Comparable<Marowner> {
     }
 
     @Override
-    public int compareTo(Marowner owner) {
+    public int compareTo(MarketOwner owner) {
         return this.getName().compareTo(owner.getName());
     }
 }

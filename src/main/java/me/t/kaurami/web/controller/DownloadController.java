@@ -1,4 +1,4 @@
-package me.t.kaurami.controller;
+package me.t.kaurami.web.controller;
 
 import me.t.kaurami.service.setting.SettingHolder;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.support.SessionStatus;
 @SessionAttributes("settingHolder")
 @RequestMapping("/download")
 @Controller
-public class DownloadReportController {
+public class DownloadController {
 
     @GetMapping()
     public String getForm(SettingHolder settingHolder){
@@ -21,7 +21,7 @@ public class DownloadReportController {
     @PostMapping
     public String endAction(SessionStatus sessionStatus){
         sessionStatus.setComplete();
-        return "redirect:/home";
+        return "redirect:/";
     }
 
 }

@@ -16,82 +16,14 @@ public class SettingHolder{
 
     private static Logger logger = LoggerFactory.getLogger(SettingHolder.class);
 
-    private final Map<String, ReportFileParameters> settings;
+    private final Map<String, ReportFormatHolder> settings;
     private final Map<String, String> availableDistricts;
     private String namePattern;
-    private ReportFileParameters volumeFormingSettings;
-    private ReportFileParameters relationCheckingSettings;
-    private String districtName;
+    private File sourceFile;
+    private long limit;
+    private ReportType type;
+    private Workbook targetFile;       //Rename
 
-
-    public SettingHolder(@Qualifier("settings") Map<String, ReportFileParameters> settings, @Qualifier("availableDistricts") Map<String, String> availableDistricts) {
-        this.settings = settings;
-        this.availableDistricts = availableDistricts;
-    }
-
-    public void setActiveSettings(String districtName) throws UnknownSettingException{
-        if (availableDistricts.containsKey(districtName)){
-            this.districtName = districtName;
-            logger.info("Selected district: " + districtName);
-            setVolumeFormingSettings();
-            setRelationCheckingSettings();
-        }else {
-            throw new UnknownSettingException(districtName + " is not available \n\n" + "available: " + availableDistricts + "\n\n");
-        }
-    }
-
-    public void setActiveSettings() throws UnknownSettingException{
-        if (districtName == null){
-            throw new IllegalArgumentException("Value 'districtName' is not initialized");
-        }
-        if (availableDistricts.containsKey(districtName)){
-            this.districtName = districtName;
-            logger.info("Selected district: " + districtName);
-            setVolumeFormingSettings();
-            setRelationCheckingSettings();
-        }else {
-            throw new UnknownSettingException(districtName + " is not available \n\n" + "available: " + availableDistricts + "\n\n");
-        }
-    }
-
-    public String getNamePattern() {
-        return namePattern;
-    }
-
-
-    public void setNamePattern(String namePattern) {
-        this.namePattern = namePattern;
-    }
-
-    public ReportFileParameters getVolumeFormingSettings() {
-        return volumeFormingSettings;
-    }
-
-    public ReportFileParameters getRelationCheckingSettings() {
-        return relationCheckingSettings;
-    }
-
-    private void setVolumeFormingSettings() {
-        this.volumeFormingSettings = settings.get("volumeFormingSettings" + districtName);
-        logger.info("Volume forming setting: " + districtName);
-    }
-
-    private void setRelationCheckingSettings() {
-        this.relationCheckingSettings = settings.get("relationCheckingSettings" + districtName);
-        logger.info("Check relation setting: " + relationCheckingSettings);
-    }
-
-    public String getDistrictName() {
-        return districtName;
-    }
-
-    public void setDistrictName(String districtName) {
-        this.districtName = districtName;
-    }
-
-
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////
     public static enum ReportType{
         VOLUME_FORMING("Список объемообразующих клиентов"), CHECKING_RELATIONSHIP("Проверка связи по хозяину");
 
@@ -105,23 +37,31 @@ public class SettingHolder{
             return name;
         }
 
-        public void setName(String name) {
-            this.name = name;
-        }
+//        public void setName(String name) {
+//            this.name = name;
+//        }
     }
 
-    private File sourceFile;
-    private long limit;
-    private ReportSetting.ReportType type;
-    private Workbook targetFile;       //Rename
+    public SettingHolder(@Qualifier("settings") Map<String, ReportFormatHolder> settings, @Qualifier("availableDistricts") Map<String, String> availableDistricts) {
+        this.settings = settings;
+        this.availableDistricts = availableDistricts;
+    }
+
+    public String getNamePattern() {
+        return namePattern;
+    }
 
 
-    public File getSourceFile() {
-        return sourceFile;
+    public void setNamePattern(String namePattern) {
+        this.namePattern = namePattern;
     }
 
     public void setSourceFile(File sourceFile) {
         this.sourceFile = sourceFile;
+    }
+
+    public File getSourceFile() {
+        return sourceFile;
     }
 
     public long getLimit() {
@@ -132,11 +72,11 @@ public class SettingHolder{
         this.limit = limit;
     }
 
-    public ReportSetting.ReportType getType() {
+    public ReportType getType() {
         return type;
     }
 
-    public void setType(ReportSetting.ReportType type) {
+    public void setType(ReportType type) {
         this.type = type;
     }
 

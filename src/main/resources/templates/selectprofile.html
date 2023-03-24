@@ -9,7 +9,7 @@
 
     <body>
         <h1>Укажите профиль приложения из списка:</h1>
-        <form method="post" th:object="${settingHolder}" action="types">
+        <form method="POST" th:object="${settingHolder}" th:action="selectprofile">
             <div th:each="p: ${@availableDistricts.entrySet}">
                 <input th:field="*{districtName}" type="radio"
                        th:value="${p.getKey}">

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class MarownerForRelationshipChecker extends Marowner implements Exportable{
+public class MarketOwnerForRelationshipChecker extends MarketOwner implements Exportable{
     private String individualTaxpayerNumber;
     private Set<String> ownerNames;
     private int validMarketsWithCredit;
@@ -16,7 +16,7 @@ public class MarownerForRelationshipChecker extends Marowner implements Exportab
     private int associatedNotValidMarket;
     private String recommendation = "";
 
-    public MarownerForRelationshipChecker(String name, String individualTaxpayerNumber) {
+    public MarketOwnerForRelationshipChecker(String name, String individualTaxpayerNumber) {
         super(name);
         this.individualTaxpayerNumber = individualTaxpayerNumber;
         ownerNames = new HashSet<>();
@@ -43,13 +43,18 @@ public class MarownerForRelationshipChecker extends Marowner implements Exportab
 
     private void createRecomendation() {
         if (ownerNames.size()>1){
-            recommendation += "Сократить количество хозяев сети.";
+            recommendation += "Сократить количество хозяев сети. ";
         }
-        if (validMarketsWithCredit>2 && associatedWithCredit<validMarketsWithCredit){
-            recommendation += "Связать по хозяину все ТТ.";
+        if (validMarketsWithCredit>2 && associatedWithCredit<validMarketsWithCredit && ownerNames.size()>0){
+            recommendation += "Связать по хозяину все ТТ. ";
+        }if (validMarketsWithCredit>2 && ownerNames.size()==0){
+            recommendation += "Связать. ";
         }
-        if (associatedNotValidMarket == associatedClient && validMarketsWithCredit < 3 && ownerNames.size()>0){
-            recommendation += "Развазять";
+        if (validMarketsWithCredit < 2 && associatedClient > 2 && ownerNames.size()>0){
+            recommendation += "Возможно следует развазять. ";
+        }
+        if (validMarketsWithCredit < 2 && associatedClient < 2 && ownerNames.size()>0){
+            recommendation += "Развазять. ";
         }
     }
 

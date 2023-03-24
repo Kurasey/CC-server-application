@@ -7,17 +7,43 @@
                             http://www.springframework.org/schema/util
                             http://www.springframework.org/schema/util/spring-util.xsd"
 >
-    <import resource="app-context-Krasnodar.xml"/>
+    <import resource="report-settings.xml"/>
 
-    <util:map id="settings" key-type="java.lang.String" value-type="me.t.kaurami.service.setting.ReportFileParameters" map-class="java.util.HashMap">
-        <entry key="volumeFormingSettingsKrasnodar" value-ref="volumeFormingSettingsKrasnodar"/>
-        <entry key="relationCheckingSettingsKrasnodar" value-ref="relationCheckingSettingsKrasnodar"/>
-    </util:map>
+    <util:map id="fields">
+        <entry key="CHECKING_RELATIONSHIP">
+            <map>
+                <entry key="status"><list><value>Статус</value></list></entry>
+                <entry key="individualTaxpayerNumber"><list><value>ИНН</value></list></entry>
+                <entry key="name"><list><value>Клиент</value></list></entry>
+                <entry key="defrredPayment"><list><value>Кол_Дн_ТК</value></list></entry>
+                <entry key="creditLine"><list><value>Лимит (Сумма)</value></list></entry>
+                <entry key="ownerName"><list><value>Хозяева сети</value><value>Хозяин (сети):</value></list></entry>
+            </map>
+        </entry>
 
-    <util:map id="availableDistricts" key-type="java.lang.String" value-type="java.lang.String">
-        <entry key="Volgograd" value="Волгоград"/>
-        <entry key="Krasnodar" value="Краснодар"/>
-        <entry key="Rostov-on-Don" value="Ростов-на-Дону"/>
+        <entry key="VOLUME_FORMING">
+            <map>
+                <entry key="name"><list><value>Кл_Имя</value></list></entry>
+                <entry key="summaryTurnover"><list><value>ТО_чистый_период</value></list></entry>
+                <entry key="defrredPayment"><list><value>ТовКред_дн</value></list></entry>
+                <entry key="summaryCreditLine"><list><value>ЛимКред_из_карт</value></list></entry>
+                <entry key="idividualTaxpayerNumber"><list><value>Кл_ИНН</value></list></entry>
+            </map>
+        </entry>
+
+
+        <entry key="CLIENTS_LIST">
+            <map>
+                <entry key="accessID"><list><value>Код</value></list></entry>
+                <entry key="name"><list><value>Клиент</value></list></entry>
+                <entry key="individualTaxpayerNumber"><list><value>ИНН</value></list></entry>
+                <entry key="marketOwnerName"><list><value>Хозяева сети</value><value>Хозяин (сети):</value></list></entry>
+                <entry key="agentName"><list><value>Агент</value></list></entry>
+                <entry key="folderName"><list><value>Группа клиента</value></list></entry>
+                <entry key="contractDate"><list><value>Нач. договора</value></list></entry>
+                <entry key="address"><list><value>адрес</value></list></entry>
+            </map>
+        </entry>
     </util:map>
 
 </beans>

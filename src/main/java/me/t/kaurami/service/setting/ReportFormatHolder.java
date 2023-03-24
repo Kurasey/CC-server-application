@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ReportFileParameters {         //rename
+public class ReportFormatHolder {         //rename
     private List<String> columnsReport;
     private LinkedList<String> fields;
     private List<Integer> numericFormat;

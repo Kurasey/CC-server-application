@@ -2,6 +2,7 @@ package me.t.kaurami;
 
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.MultipartConfigElement;
 

@@ -2,7 +2,7 @@ package me.t.kaurami.entities;
 
 import java.util.HashMap;
 
-public class MarownerVolumeForming extends Marowner implements Exportable {
+public class MarketOwnerVolumeForming extends MarketOwner implements Exportable {
 
     private String idividualTaxpayerNumber;
     private int marketCount;
@@ -10,7 +10,7 @@ public class MarownerVolumeForming extends Marowner implements Exportable {
     private int deferredPayment;
     private int summaryTurnover;
 
-    public MarownerVolumeForming(String name, String idividualTaxpayerNumber, int summaryCreditLine, int deferredPayment, int summaryTurnover) {
+    public MarketOwnerVolumeForming(String name, String idividualTaxpayerNumber, int summaryCreditLine, int deferredPayment, int summaryTurnover) {
         super(name);
         if (isCorrectITN(idividualTaxpayerNumber)){
             this.idividualTaxpayerNumber = idividualTaxpayerNumber;

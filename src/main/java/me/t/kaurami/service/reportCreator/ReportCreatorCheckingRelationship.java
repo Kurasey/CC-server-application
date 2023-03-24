@@ -1,33 +1,32 @@
 package me.t.kaurami.service.reportCreator;
 
 import me.t.kaurami.entities.Exportable;
-import me.t.kaurami.entities.Marowner;
-import me.t.kaurami.entities.MarownerForRelationshipChecker;
+import me.t.kaurami.entities.MarketOwner;
+import me.t.kaurami.entities.MarketOwnerForRelationshipChecker;
 import me.t.kaurami.service.setting.SettingHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Service("reportCreatorCR")
+@Service("CHECKING_RELATIONSHIP_reportCreator")
 public class ReportCreatorCheckingRelationship implements ReportCreator {
 
     private SettingHolder settingHolder;
     private LinkedList<LinkedList<String>> data;
     private HashMap<String, Integer> columnNumbers = new HashMap<>();
-    private HashMap<String, List<String>> columnsReport = new HashMap<String,  List<String>>(){{
-        put("status", Arrays.asList("Статус"));
-        put("individualTaxpayerNumber",Arrays.asList("ИНН"));
-        put("name",Arrays.asList("Клиент"));
-        put("defrredPayment",Arrays.asList("Кол_Дн_ТК"));
-        put("creditLine",Arrays.asList("Лимит (Сумма)"));
-        put("ownerName", Arrays.asList("Хозяин (сети):"));
-    }};
+    private Map<String, Map<String, List<String>>> fields;
 
     @Autowired
     public void setSettingHolder(SettingHolder settingHolder) {
         this.settingHolder = settingHolder;
+    }
+
+    @Resource(name = "fields")
+    public void setFields(Map<String, Map<String, List<String>>> fields) {
+        this.fields = fields;
     }
 
     @Override
@@ -42,13 +41,13 @@ public class ReportCreatorCheckingRelationship implements ReportCreator {
 
     @Override
     public List<Exportable> createReport() {
-        fillColumnNumbers(columnsReport);
-        HashMap<String, MarownerForRelationshipChecker> ownerHashMap = new HashMap<>();
+        fillColumnNumbers(fields);
+        HashMap<String, MarketOwnerForRelationshipChecker> ownerHashMap = new HashMap<>();
         data.removeFirst();
         String individualTaxpayerNumber;
-        MarownerForRelationshipChecker.setNamePattern(settingHolder.getNamePattern());
-        MarownerForRelationshipChecker owner;
-        ownerHashMap.put("", new MarownerForRelationshipChecker("Клиенты без ИНН", ""));
+        MarketOwnerForRelationshipChecker.setNamePattern(settingHolder.getNamePattern());
+        MarketOwnerForRelationshipChecker owner;
+        ownerHashMap.put("", new MarketOwnerForRelationshipChecker("Клиенты без ИНН", ""));
         for (LinkedList<String> list: data){
             individualTaxpayerNumber = list.get(columnNumbers.get("individualTaxpayerNumber"));
             if (ownerHashMap.containsKey(individualTaxpayerNumber)){
@@ -58,7 +57,7 @@ public class ReportCreatorCheckingRelationship implements ReportCreator {
                         list.get(columnNumbers.get("creditLine")),
                         list.get(columnNumbers.get("ownerName")));
             }else {
-                owner = new MarownerForRelationshipChecker(
+                owner = new MarketOwnerForRelationshipChecker(
                         list.get(columnNumbers.get("name")),
                         list.get(columnNumbers.get("individualTaxpayerNumber")));
                 owner.updateValues(list.get(columnNumbers.get("status")),
@@ -68,13 +67,14 @@ public class ReportCreatorCheckingRelationship implements ReportCreator {
                 ownerHashMap.put(individualTaxpayerNumber, owner);
             }
         }
-        List<Exportable> exportables = ownerHashMap.values().stream().sorted(Marowner::compareTo).collect(Collectors.toList());
+        List<Exportable> exportables = ownerHashMap.values().stream().sorted(MarketOwner::compareTo).collect(Collectors.toList());
         return exportables;
     }
 
-    private void fillColumnNumbers(HashMap<String, List<String>> columns) { /* Remove HashMap from args*/
+    private void fillColumnNumbers(Map<String, Map<String, List<String>>> fields){
+        Map<String, List<String>> sourceFields = fields.get("CHECKING_RELATIONSHIP");
         for (String columnName: data.getFirst()){
-            for (Map.Entry entry: columns.entrySet()) {
+            for (Map.Entry entry: sourceFields.entrySet()) {
                 if (((List<String>) entry.getValue()).contains(columnName)) {
                     columnNumbers.put((String) entry.getKey(), data.getFirst().indexOf(columnName));
                 }

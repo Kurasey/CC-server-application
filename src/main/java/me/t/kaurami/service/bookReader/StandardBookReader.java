@@ -24,9 +24,9 @@ public class StandardBookReader implements BookReader {
 
     @Override
     public void loadBook(File file) throws IOException, InvalidFormatException {
-        if (file.getName().contains(".xls")){
+        if (file.getName().contains(".xlsx")){
             workbook = new XSSFWorkbook(new FileInputStream(file));
-        }else if (file.getName().contains(".xlsx")){
+        }else if (file.getName().contains(".xls")){
             workbook = new HSSFWorkbook(new FileInputStream(file));
         }else {
             throw new UnsupportedOperationException("File is not valid");
@@ -69,6 +69,11 @@ public class StandardBookReader implements BookReader {
             row = sheet.getRow(i);
             LinkedList<String> cellsValues = new LinkedList<>();
             for (int j = 0; j < row.getLastCellNum(); j++){
+//                try {
+//                    cellsValues.add(extractStringCellValue(row.getCell(j)));
+//                }catch (NullPointerException e){
+//                    cellsValues.add("");
+//                }
                 cellsValues.add(extractStringCellValue(row.getCell(j)));
             }
             rowsValues.add(cellsValues);
@@ -80,7 +85,8 @@ public class StandardBookReader implements BookReader {
         sheet = workbook.getSheetAt(selectedSheetNumber);
     }
 
-    private String extractStringCellValue(Cell cell){
+    private String extractStringCellValue(Cell cell)/* throws NullPointerException*/{
+        DataFormatter formatter = new DataFormatter();
         switch (cell.getCellType()){
             case STRING:
                 return cell.getStringCellValue();
@@ -88,7 +94,11 @@ public class StandardBookReader implements BookReader {
                 if (DateUtil.isCellDateFormatted(cell)){
                     return dateFormat.format(cell.getDateCellValue());
                 }else {
-                    return Double.toString(cell.getNumericCellValue());
+//                    String value = formatter.formatCellValue(cell);
+//
+//                    System.out.println(value);
+//                     return value;
+                    return (Double.valueOf(cell.getNumericCellValue())).toString();
                 }
             case BOOLEAN:
                 return Boolean.toString(cell.getBooleanCellValue());

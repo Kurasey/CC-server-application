@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="1112.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ReminderController">
+   <children>
+      <TableView fx:id="tableRemindes" layoutX="14.0" layoutY="35.0" prefHeight="365.0" prefWidth="1112.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0">
+        <columns>
+          <TableColumn fx:id="ColumnDateRequest" prefWidth="82.00003051757812" text="Дата запроса" />
+          <TableColumn fx:id="ColumnDateReminde" prefWidth="79.0" text="Обработать" />
+            <TableColumn fx:id="ColumnAgentName" prefWidth="91.0" text="Агент" />
+            <TableColumn fx:id="ColumnClientName" prefWidth="265.0" text="Клиент" />
+            <TableColumn fx:id="ColumnClientINN" prefWidth="108.0" text="ИНН" />
+            <TableColumn fx:id="ColumnComment" minWidth="0.0" prefWidth="167.0" text="Комментарий" />
+            <TableColumn fx:id="ColumnDecision" prefWidth="101.0" text="Решение" />
+            <TableColumn fx:id="ColumnCause" prefWidth="125.0" text="Обоснование" />
+            <TableColumn fx:id="ColumnStatus" prefWidth="89.0" text="Статус" />
+        </columns>
+      </TableView>
+      <Button fx:id="ButtonCloseWindow" layoutX="1036.0" layoutY="2.0" mnemonicParsing="false" text="Закрыть" />
+      <CheckBox fx:id="CHBOnlyUnprocessed" layoutX="556.0" layoutY="6.0" mnemonicParsing="false" selected="true" text="Показывать только не обработанные" />
+      <CheckBox fx:id="CHBOnlyPastDateProcessing" layoutX="219.0" layoutY="6.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="315.0" selected="true" text="Показывать только с подошедшей датой обработки" />
+   </children>
+   <effect>
+      <InnerShadow />
+   </effect>
+</AnchorPane>

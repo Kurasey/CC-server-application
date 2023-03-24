@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org"
+>
 <head>
     <meta charset="UTF-8">
-    <title>XXI Century. CC report Module</title>
+    <title>XXI Century. CC application</title>
     <link rel="shortcut icon" href="images/icon.png" type="image/x-icon">
 </head>
 <body>
-    <form method="post" enctype="multipart/form-data" action="/upload">
-        File to upload:
-        <input type="file" name="sourceFile"><br/>
-        Name:
-        <input type="text" name="name"><br/><br/>
-        <input type="submit" value="upload">Press here to upload sourceFile
-    </form>
+    <h3>Доступные модули:</h3>
+    <div>
+        <a href="/reportmodule/selecttype">Формирование отчета</a>
+    </div>
+    <div>
+        <a href="/adminmodule">Администрирование</a>
+    </div>
 </body>
 </html>
