@@ -79,13 +79,13 @@ public class Request implements Comparable<Request> {
         this.decision = decision;
     }
 
-    public String getClientAccessId() {
+/*    public String getClientAccessId() {
         return clientAccessId;
     }
 
     public String getAgentName() {
         return agentName;
-    }
+    }*/
 
     public RequestType getType() {
         return type;

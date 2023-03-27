@@ -13,7 +13,7 @@ import java.util.*;
 
 
 @Service
-public class DBController {
+public class DataUploader {
 
     private BookReader reader;
     private AgentRepository agentRepository;
@@ -26,7 +26,24 @@ public class DBController {
     @Resource(name = "fields")
     private Map<String, Map<String, List<String>>> fields;
 
+    public void setReader(BookReader reader) {
+        this.reader = reader;
+    }
+
+    public void setFields(Map<String, Map<String, List<String>>> fields) {
+        this.fields = fields;
+    }
+
+    public void setAgentRepository(AgentRepository agentRepository) {
+        this.agentRepository = agentRepository;
+    }
+
+    public void setClientRepository(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
+
     public void uploadData(File file) throws Exception{
+        initializeFields();
         agentMap = new HashMap<>();
         clientMap = new HashMap<>();
         reader.loadBook(file);
@@ -39,7 +56,7 @@ public class DBController {
             agentName = list.get(columnNumbers.get("agentName"));
             clientID = list.get(columnNumbers.get("accessID"));
             if (!agentMap.containsKey(agentName)){
-                agentMap.put(agentName, Agent.newAgent(list.get(columnNumbers.get("folderName")), list.get(columnNumbers.get("fullName"))));
+                agentMap.put(agentName, Agent.newAgent(list.get(columnNumbers.get("folderName")), list.get(columnNumbers.get("agentName"))));
             }
             if (!clientMap.containsKey(clientID)){
                 clientMap.put(clientID, new Client.ClientBuilder()
@@ -58,6 +75,12 @@ public class DBController {
         postToDB();
     }
 
+    private void initializeFields() {
+        columnNumbers = new HashMap<>();
+        agentMap = new HashMap<>();
+        clientMap = new HashMap<>();
+    }
+
     private LocalDate parseDate(String date) {
 
         try {
@@ -72,6 +95,7 @@ public class DBController {
     }
 
     private void fillColumnNumbers(Map<String, Map<String, List<String>>> fields){
+
         Map<String, List<String>> sourceFields = fields.get("CLIENTS_LIST");
         for (String columnName: sourceData.getFirst()){
             for (Map.Entry entry: sourceFields.entrySet()) {
@@ -84,7 +108,7 @@ public class DBController {
 
     private void postToDB() {
         agentMap.values().stream().forEach(agent -> agentRepository.save(agent));
-        clientMap.values().stream().forEach(client -> clientRepository.save(client));
+        clientMap.values().stream().forEach(client -> clientRepository.save((client)));
     }
 
 }

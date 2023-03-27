@@ -24,7 +24,6 @@ import javafx.util.Duration;
 import javafx.util.StringConverter;
 import me.t.kaurami.data.AgentRepository;
 import me.t.kaurami.data.ClientRepository;
-import me.t.kaurami.data.DBController;
 import me.t.kaurami.data.RequestRepository;
 import me.t.kaurami.entities.Agent;
 import me.t.kaurami.entities.Client;
@@ -70,7 +69,7 @@ public class Controller {
 
 /*
 
-private AbstractStorage storage = DBController.connect();
+private AbstractStorage storage = DataUploader.connect();
     @FXML
     private TableColumn<Request, Integer> ColumnID;
 
@@ -458,7 +457,7 @@ private AbstractStorage storage = DBController.connect();
 
     @FXML
     void handleMenuLoadDataFromTextFile(ActionEvent event) {
-/*        DBController.fromTextFile();
+/*        DataUploader.fromTextFile();
         CBAgent.setItems(filterAgents());
         CBClient.setItems(filterClients());
         fillTable();
@@ -468,7 +467,7 @@ private AbstractStorage storage = DBController.connect();
 
     @FXML
     void handleMenuLoadDataFromExcel(ActionEvent event) {
-        DBController.fromExcel_97_03();
+//        DataUploader.fromExcel_97_03();
         fillAgents();
         fillClients();
         fillTable();
@@ -477,13 +476,13 @@ private AbstractStorage storage = DBController.connect();
 
     @FXML
     void handleMenuExportData(ActionEvent event) {
-//        DBController.exportDBToExcel(new DirectoryChooser().showDialog(null).getPath());
+//        DataUploader.exportDBToExcel(new DirectoryChooser().showDialog(null).getPath());
         throw new UnsupportedOperationException();
     }
 
     @FXML
     void handleMenuUpdateFromExcel(ActionEvent event) {
-        DBController.updateDBCollectionsFromExcel_97_03();
+//        DataUploader.updateDBCollectionsFromExcel_97_03();
         fillAgents();
         fillClients();
         fillTable();
@@ -504,19 +503,19 @@ private AbstractStorage storage = DBController.connect();
 
     @FXML
     void handleMenuSetAgentData(ActionEvent event) {
-//        DBController.setTextFile("Agents", chooseFile());
+//        DataUploader.setTextFile("Agents", chooseFile());
         throw new UnsupportedOperationException();
     }
 
     @FXML
     void handleMenuSetClientData(ActionEvent event) {
-//        DBController.setTextFile("Clients", chooseFile());
+//        DataUploader.setTextFile("Clients", chooseFile());
         throw new UnsupportedOperationException();
     }
 
     @FXML
     void handleMenuSetExcelFromAccessData(ActionEvent event) {
-        DBController.setExcelFile(chooseFile());
+//        DataUploader.setExcelFile(chooseFile());
     } // Переработка
 
     @FXML
@@ -541,7 +540,7 @@ private AbstractStorage storage = DBController.connect();
 
     @FXML
     void handleMenuShowRemindes(ActionEvent event) {
-        FormCreator.showReminde();
+//        FormCreator.showReminde();
     }
 
     @FXML
@@ -693,7 +692,7 @@ private AbstractStorage storage = DBController.connect();
 
     private void setListeners() {
 
-        FormCreator.getStageMain().setOnShown(event -> fillTable());
+//        FormCreator.getStageMain().setOnShown(event -> fillTable());
 
 
         CBAgent.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

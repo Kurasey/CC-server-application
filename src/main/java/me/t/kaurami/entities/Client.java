@@ -21,7 +21,7 @@ public class Client {
     private String address;
 
     private Client(String name, String individualTaxpayerNumber, String accessId, String marketOwnerName,
-                   String agentName, String folderName, LocalDate contractDate, String address) {
+                   String agentName, String folderName, LocalDate contractDate, String address, Agent agent) {
         this.name = name;
         this.individualTaxpayerNumber = individualTaxpayerNumber;
         this.accessID = accessId;
@@ -30,6 +30,7 @@ public class Client {
         this.folderName = folderName;
         this.contractDate = contractDate;
         this.address = address;
+        this.agent = agent;
     }
 
     public static class ClientBuilder{
@@ -49,7 +50,7 @@ public class Client {
 
         public Client build(){
             return new Client(name, individualTaxpayerNumber, accessID,
-                    marketOwnerName, agentName, folderName, contractDate, address);
+                    marketOwnerName, agentName, folderName, contractDate, address, agent);
         };
 
         public ClientBuilder accessID(String accessID){
@@ -128,5 +129,20 @@ public class Client {
 
     public Agent getAgent() {
         return agent;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "accessID='" + accessID + '\'' +
+                ", agent=" + agent +
+                ", name='" + name + '\'' +
+                ", individualTaxpayerNumber='" + individualTaxpayerNumber + '\'' +
+                ", marketOwnerName='" + marketOwnerName + '\'' +
+                ", agentName='" + agentName + '\'' +
+                ", folderName='" + folderName + '\'' +
+                ", contractDate=" + contractDate +
+                ", address='" + address + '\'' +
+                '}';
     }
 }
