@@ -1,4 +1,4 @@
-package me.t.kaurami;
+package me.t.kaurami.config;
 
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.*;
@@ -20,4 +20,6 @@ public class AppConfig {
         MultipartConfigFactory factory = new MultipartConfigFactory();
         return factory.createMultipartConfig();
     }
+
+
 }

@@ -24,10 +24,12 @@ import javafx.util.Duration;
 import javafx.util.StringConverter;
 import me.t.kaurami.data.AgentRepository;
 import me.t.kaurami.data.ClientRepository;
+import me.t.kaurami.data.DataUploader;
 import me.t.kaurami.data.RequestRepository;
 import me.t.kaurami.entities.Agent;
 import me.t.kaurami.entities.Client;
 import me.t.kaurami.entities.Request;
+import org.springframework.web.client.RestTemplate;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,11 +48,12 @@ public class Controller {
     private AgentRepository agentRepository;
     private ClientRepository clientRepository;
     private RequestRepository requestRepository;
-
+    private DataUploader uploader;
 
     private FadeTransition ft;
     private static Preferences preferencesSizeTC = Preferences.userNodeForPackage(Controller.class);
-    JFrame frame = new JFrame();
+    private JFrame frame = new JFrame();
+
 
    /* @FXML
     private AnchorPane Pane;
@@ -467,7 +470,11 @@ private AbstractStorage storage = DataUploader.connect();
 
     @FXML
     void handleMenuLoadDataFromExcel(ActionEvent event) {
-//        DataUploader.fromExcel_97_03();
+        try {
+            uploader.uploadData(chooseFile());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         fillAgents();
         fillClients();
         fillTable();
@@ -791,7 +798,7 @@ private AbstractStorage storage = DataUploader.connect();
         checkEvent();
     }
 
-    private static File chooseFile() {
+    private File chooseFile() {
         FileChooser chooser = new FileChooser();
         chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("TEXT FILES(*.txt)", "*.txt"));
         return chooser.showOpenDialog(null);
@@ -887,6 +894,7 @@ private AbstractStorage storage = DataUploader.connect();
             EventListView.setVisible(false);
         }
         EventListView.setItems(eventList);*/
+        RestTemplate template;
     }
 
     private void showAlert(String text) {

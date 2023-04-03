@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>XXI Century. CC report Module</title>
+    <link rel="shortcut icon" href="images/icon.png" type="image/x-icon">
+
+</head>
+<body>
+    <h1>Параметры отчета</h1>
+    <form method="post" enctype="multipart/form-data" th:action="@{/downloadclients}" th:object="${sourceFile}">
+        <div>
+            Файл с исходными данными:
+            <input type="file" name="sourceFile">
+        </div>
+
+        <h3>ВНИМАНИЕ! ФАЙЛ ДОЛЖЕН СОДЕРЖАТЬ ОБЯЗАТЕЛЬНЫЕ ПОЛЯ:</h3>
+        <ul>
+            <li><p>Имя клиента</p></li>
+            <li><p>ТО чистый период</p></li>
+            <li><p>Товарный кредит,дн</p></li>
+            <li><p>Лимит кредита из карты</p></li>
+            <li><p>ИНН</p></li>
+        </ul>
+
+        <div>
+            <button>Загрузка</button>
+        </div>
+    </form>
+
+</body>
+</html>

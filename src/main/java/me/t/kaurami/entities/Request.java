@@ -6,23 +6,39 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
+@Table(name = "requests")
 public class Request implements Comparable<Request> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long reqId;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_access_id")
     private Client client;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "agent_name")
     private Agent agent;
 
+    @Column(name = "request_type")
+    @Enumerated(EnumType.STRING)
     private RequestType type;
+
+    @Column(name = "request_decision")
+    @Enumerated(EnumType.STRING)
     private Decision decision;
+
+    @Column(name = "request_date")
     private LocalDateTime requestDate;
+
+    @Column(name = "decision_date")
     private LocalDateTime decisionDate;
+
+    @Column(name = "request_commentary")
     private String commentary;
+
+    @Column(name = "decision_cause")
     private String decisionCause;
 
     public enum RequestType{

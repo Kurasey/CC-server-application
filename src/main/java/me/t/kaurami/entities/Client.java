@@ -1,36 +1,47 @@
 package me.t.kaurami.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "clients")
 public class Client {
 
     @Id
+    @Column(name = "access_id")
     private String accessID;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "agent_name")
     private Agent agent;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "individual_taxpayer_number")
     private String individualTaxpayerNumber;
+
+    @Column(name = "market_owner_name")
     private String marketOwnerName;
-    private String agentName;
-    private String folderName;
+
+    @Column(name = "contract_date")
     private LocalDate contractDate;
+
+    @Column(name = "address")
     private String address;
 
     private Client(String name, String individualTaxpayerNumber, String accessId, String marketOwnerName,
-                   String agentName, String folderName, LocalDate contractDate, String address, Agent agent) {
+                   LocalDate contractDate, String address, Agent agent) {
         this.name = name;
         this.individualTaxpayerNumber = individualTaxpayerNumber;
         this.accessID = accessId;
         this.marketOwnerName = marketOwnerName;
-        this.agentName = agentName;
-        this.folderName = folderName;
         this.contractDate = contractDate;
         this.address = address;
         this.agent = agent;
+    }
+
+    private Client(){
     }
 
     public static class ClientBuilder{
@@ -40,8 +51,6 @@ public class Client {
         private String name;
         private String individualTaxpayerNumber;
         private String marketOwnerName;
-        private String agentName;
-        private String folderName;
         private LocalDate contractDate;
         private String address;
 
@@ -50,7 +59,7 @@ public class Client {
 
         public Client build(){
             return new Client(name, individualTaxpayerNumber, accessID,
-                    marketOwnerName, agentName, folderName, contractDate, address, agent);
+                    marketOwnerName, contractDate, address, agent);
         };
 
         public ClientBuilder accessID(String accessID){
@@ -71,14 +80,6 @@ public class Client {
         }
         public ClientBuilder marketOwnerName(String marketOwnerName){
             this.marketOwnerName = marketOwnerName;
-            return this;
-        }
-        public ClientBuilder agentName(String agentName){
-            this.agentName = agentName;
-            return this;
-        }
-        public ClientBuilder folderName(String folderName){
-            this.folderName = folderName;
             return this;
         }
         public ClientBuilder contractDate(LocalDate contractDate){
@@ -112,11 +113,11 @@ public class Client {
     }
 
     public String getAgentName() {
-        return agentName;
+        return agent.getAgentName();
     }
 
     public String getFolderName() {
-        return folderName;
+        return agent.getFolderName();
     }
 
     public LocalDate getContractDate() {
@@ -139,8 +140,6 @@ public class Client {
                 ", name='" + name + '\'' +
                 ", individualTaxpayerNumber='" + individualTaxpayerNumber + '\'' +
                 ", marketOwnerName='" + marketOwnerName + '\'' +
-                ", agentName='" + agentName + '\'' +
-                ", folderName='" + folderName + '\'' +
                 ", contractDate=" + contractDate +
                 ", address='" + address + '\'' +
                 '}';

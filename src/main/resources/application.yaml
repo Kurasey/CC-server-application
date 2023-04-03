@@ -8,7 +8,7 @@ spring:
     generate-unique-name: false
     name: creatorcloud
   data:
-    rest:
-      base-path: /data-api
+rest:
+  base-path: /data-api
 server:
   port: 60001

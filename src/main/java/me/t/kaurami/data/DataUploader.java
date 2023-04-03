@@ -25,6 +25,13 @@ public class DataUploader {
 
     @Resource(name = "fields")
     private Map<String, Map<String, List<String>>> fields;
+    private String nameOfSourceColumnMap = "CLIENTS_LIST";
+
+    public DataUploader(BookReader reader, AgentRepository agentRepository, ClientRepository clientRepository) {
+        this.reader = reader;
+        this.agentRepository = agentRepository;
+        this.clientRepository = clientRepository;
+    }
 
     public void setReader(BookReader reader) {
         this.reader = reader;
@@ -65,8 +72,7 @@ public class DataUploader {
                         .name(list.get(columnNumbers.get("name")))
                         .individualTaxpayerNumber(list.get(columnNumbers.get("individualTaxpayerNumber")))
                         .marketOwnerName(list.get(columnNumbers.get("marketOwnerName")))
-                        .agentName(agentName)
-                        .folderName(list.get(columnNumbers.get("folderName")))
+                        .agent(agentMap.get(agentName))
                         .contractDate(parseDate(list.get(columnNumbers.get("contractDate"))))
                         .address(list.get(columnNumbers.get("address")))
                         .build());
@@ -96,7 +102,7 @@ public class DataUploader {
 
     private void fillColumnNumbers(Map<String, Map<String, List<String>>> fields){
 
-        Map<String, List<String>> sourceFields = fields.get("CLIENTS_LIST");
+        Map<String, List<String>> sourceFields = fields.get(nameOfSourceColumnMap);
         for (String columnName: sourceData.getFirst()){
             for (Map.Entry entry: sourceFields.entrySet()) {
                 if (((List<String>) entry.getValue()).contains(columnName)) {
@@ -107,8 +113,8 @@ public class DataUploader {
     }
 
     private void postToDB() {
-        agentMap.values().stream().forEach(agent -> agentRepository.save(agent));
-        clientMap.values().stream().forEach(client -> clientRepository.save((client)));
+        agentRepository.saveAll(agentMap.values());
+        clientRepository.saveAll(clientMap.values());
     }
 
 }

@@ -17,25 +17,53 @@ import static org.mockito.Mockito.*;
 
 public class DataUploaderTest {
 
-
-    MockitoSession session;
-    LinkedList<LinkedList<String>> data;
-    Map<String, Map<String, List<String>>> fields;
-
     @Mock
     BookReader reader;
     @Mock
     AgentRepository agentRepository;
     @Mock
     ClientRepository clientRepository;
-
-
     @Spy
     DataUploader dbController;
 
+    MockitoSession session;
+    LinkedList<LinkedList<String>> data;
+    Map<String, Map<String, List<String>>> fields = new HashMap<>();
+    Map<Agent, List<Client>> result;
+
+
     @BeforeEach
-    void beforeEach() {
+    void beforeEach(){
         session = Mockito.mockitoSession().initMocks(this).startMocking();
+        setMocks();
+        dbController.setAgentRepository(agentRepository);
+        dbController.setClientRepository(clientRepository);
+        dbController.setReader(reader);
+        dbController.setFields(fields);
+        try {
+            dbController.uploadData(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void setMocks(){
+        when(reader.readSheet()).thenReturn(data);
+        when(agentRepository.save(any())).then(invocationOnMock -> {
+            Agent agent = ((Agent) (invocationOnMock.getArguments()[0]));
+            result.put(agent, new ArrayList<>());
+            return agent;
+        });
+        when(clientRepository.save(any())).then(invocationOnMock -> {
+            Client client = ((Client) (invocationOnMock.getArguments()[0]));
+            result.get(client.getAgent()).add(client);
+            return client;
+        });
+    }
+
+    @BeforeEach
+    void initData(){
+        result = new HashMap<>();
         data = new LinkedList<>();
         data.addFirst(new LinkedList<>(Arrays.asList(
                 "Код",
@@ -67,52 +95,36 @@ public class DataUploaderTest {
                 "21.01.2022",
                 "г.Тимашевск, ул.Интернациональная, 16, 9.00-18.00, б/в, с печатью!!"
         )));
-
-        fields = new HashMap<>();
-        fields.put("CLIENTS_LIST", new HashMap<String, List<String>>(){{
-            put("accessID", new LinkedList<>(Arrays.asList("Код")));
-            put("name", new LinkedList<>(Arrays.asList("Клиент")));
-            put("individualTaxpayerNumber", new LinkedList<>(Arrays.asList("ИНН")));
-            put("marketOwnerName", new LinkedList<>(Arrays.asList("Хозяева сети", "Хозяин (сети):")));
-            put("agentName", new LinkedList<>(Arrays.asList("Агент")));
-            put("folderName", new LinkedList<>(Arrays.asList("Группа клиента")));
-            put("contractDate", new LinkedList<>(Arrays.asList("Нач. договора")));
-            put("address", new LinkedList<>(Arrays.asList("адрес")));
-        }});
-        when(reader.readSheet()).thenReturn(data);
-        when(agentRepository.save(any())).then(invocationOnMock -> {
-            Agent agent = ((Agent) (invocationOnMock.getArguments()[0]));
-            System.out.println(agent);
-            return agent;
-        });
-        when(clientRepository.save(any())).then(invocationOnMock -> {
-            Client client = ((Client) (invocationOnMock.getArguments()[0]));
-            System.out.println(client);
-            return client;
-        });
-
+        fields = new HashMap<String, Map<String, List<String>>>(){{
+            put("CLIENTS_LIST", new HashMap<String, List<String>>(){{
+                put("accessID", new LinkedList<>(Arrays.asList("Код")));
+                put("name", new LinkedList<>(Arrays.asList("Клиент")));
+                put("individualTaxpayerNumber", new LinkedList<>(Arrays.asList("ИНН")));
+                put("marketOwnerName", new LinkedList<>(Arrays.asList("Хозяева сети", "Хозяин (сети):")));
+                put("agentName", new LinkedList<>(Arrays.asList("Агент")));
+                put("folderName", new LinkedList<>(Arrays.asList("Группа клиента")));
+                put("contractDate", new LinkedList<>(Arrays.asList("Нач. договора")));
+                put("address", new LinkedList<>(Arrays.asList("адрес")));
+            }});
+        }};
     }
 
     @Test
-    @DisplayName("Data loader: upload test")
-    void Test() {
-
-        dbController.setAgentRepository(agentRepository);
-        dbController.setClientRepository(clientRepository);
-        dbController.setReader(reader);
-        dbController.setFields(fields);
-        try {
-            dbController.uploadData(null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    @DisplayName("Upload agents")
+    void uploadAgents() {
+        Assertions.assertTrue(result.keySet().size() == 1);
     }
+
+    @Test
+    @DisplayName("Upload clients")
+    void uploadClients(){
+        Assertions.assertTrue(result.entrySet().iterator().next().getValue().size() == data.size());
+    }
+
 
     @AfterEach
     void afterEach(){
         session.finishMocking();
     }
-
 
 }

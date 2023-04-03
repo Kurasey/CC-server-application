@@ -24,12 +24,14 @@ public class StandardBookReader implements BookReader {
 
     @Override
     public void loadBook(File file) throws IOException, InvalidFormatException {
-        if (file.getName().contains(".xlsx")){
-            workbook = new XSSFWorkbook(new FileInputStream(file));
-        }else if (file.getName().contains(".xls")){
-            workbook = new HSSFWorkbook(new FileInputStream(file));
-        }else {
-            throw new UnsupportedOperationException("File is not valid");
+        try (FileInputStream inputStream = new FileInputStream(file)) {
+            if (file.getName().contains(".xlsx")){
+                workbook = new XSSFWorkbook(inputStream);
+            }else if (file.getName().contains(".xls")){
+                workbook = new HSSFWorkbook(inputStream);
+            }else {
+                throw new UnsupportedOperationException("File is not valid");
+            }
         }
         Iterator<Sheet> sheetIterator = workbook.sheetIterator();
         sheetsNames = new ArrayList<String>();
