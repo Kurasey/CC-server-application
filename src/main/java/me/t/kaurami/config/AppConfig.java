@@ -8,6 +8,7 @@ import javax.servlet.MultipartConfigElement;
 
 @Configuration
 @Lazy(true)
+//@ImportResource("app-context.xml")
 public class AppConfig {
 
 /*    @Bean

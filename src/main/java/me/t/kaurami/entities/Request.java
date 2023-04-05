@@ -1,6 +1,7 @@
 package me.t.kaurami.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -9,20 +10,25 @@ import java.util.Date;
 @Table(name = "requests")
 public class Request implements Comparable<Request> {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     private Long reqId;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_access_id")
+    @NotNull
     private Client client;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "agent_name")
+    @NotNull
     private Agent agent;
 
     @Column(name = "request_type")
     @Enumerated(EnumType.STRING)
+    @NotNull
     private RequestType type;
 
     @Column(name = "request_decision")
@@ -30,6 +36,7 @@ public class Request implements Comparable<Request> {
     private Decision decision;
 
     @Column(name = "request_date")
+    @NotNull
     private LocalDateTime requestDate;
 
     @Column(name = "decision_date")
@@ -81,6 +88,7 @@ public class Request implements Comparable<Request> {
     }
 
     public Request(Client client, Agent agent, RequestType type, String commentary) {
+        this.reqId = 1l;
         this.client = client;
         this.agent = agent;
         this.type = type;

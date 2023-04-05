@@ -1,6 +1,8 @@
 package me.t.kaurami.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -9,13 +11,16 @@ public class Client {
 
     @Id
     @Column(name = "access_id")
+    @NotNull
     private String accessID;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "agent_name")
+    @NotNull
     private Agent agent;
 
     @Column(name = "name")
+    @NotBlank
     private String name;
 
     @Column(name = "individual_taxpayer_number")
@@ -28,6 +33,7 @@ public class Client {
     private LocalDate contractDate;
 
     @Column(name = "address")
+    @NotBlank
     private String address;
 
     private Client(String name, String individualTaxpayerNumber, String accessId, String marketOwnerName,

@@ -80,5 +80,8 @@ public class ReportCreatorCheckingRelationship implements ReportCreator {
                 }
             }
         }
+        System.out.println(sourceFields);
+        System.out.println(data.getFirst());
+        System.out.println(columnNumbers);
     }
 }

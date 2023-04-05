@@ -33,6 +33,11 @@ public class DataUploader {
         this.clientRepository = clientRepository;
     }
 
+    private DataUploader() {
+    }
+
+
+
     public void setReader(BookReader reader) {
         this.reader = reader;
     }

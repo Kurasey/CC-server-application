@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.support.AbstractApplicationContext;
 
-@ImportResource("app-context.xml")
+
 @SpringBootApplication
 public class SpringDemoApplication{
 
