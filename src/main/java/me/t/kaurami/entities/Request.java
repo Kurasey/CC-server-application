@@ -37,9 +37,11 @@ public class Request implements Comparable<Request> {
 
     @Column(name = "request_date")
     @NotNull
+//    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime requestDate;
 
     @Column(name = "decision_date")
+//    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime decisionDate;
 
     @Column(name = "request_commentary")

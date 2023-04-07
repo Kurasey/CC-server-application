@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/agents", produces = "application/json")
 @CrossOrigin(origins = "http://localhost:60001")
-public class AgentController {
+public class AgentController{
 
     private AgentRepository agentRepository;
 

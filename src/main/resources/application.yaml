@@ -7,8 +7,17 @@ spring:
   datasource:
     generate-unique-name: false
     name: creatorcloud
-  data:
+  jpa:
+    show-sql: true
 rest:
   base-path: /data-api
 server:
+
   port: 60001
+logging:
+  level:
+    root: WARN
+    org.springframework.security: DEBUG
+
+
+

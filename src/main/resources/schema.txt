@@ -35,6 +35,18 @@ CREATE TABLE IF NOT EXISTS requests(
     decision_cause text
 );
 
+CREATE TABLE IF NOT EXISTS users(
+    username varchar PRIMARY KEY,
+    password varchar NOT NULL,
+    enabled boolean NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS authorities(
+    username varchar NOT NULL REFERENCES users(username),
+    authority varchar NOT NULL,
+    CONSTRAINT user_role UNIQUE (username, authority)
+);
+
 CREATE OR REPLACE FUNCTION get_agents(IN name varchar DEFAULT '') RETURNS SETOF agents $$
     SELECT * FROM agents
     WHERE agent_name = name
