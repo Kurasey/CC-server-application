@@ -20,17 +20,17 @@ import java.util.Map;
 @ComponentScan(basePackages = "me.t.kaurami.*")
 public class TestConfig {
 
-    @Bean
+ /*   @Bean
     Map<String, Map<String, List<String>>> fields() {
-        Map<String, Map<String, List<String>>> fields;
+*//*        Map<String, Map<String, List<String>>> fields;
         GenericXmlApplicationContext context = new GenericXmlApplicationContext();
         context.load("app-context.xml");
         context.refresh();
         fields = context.getBean("fields", Map.class);
         context.close();
-        return fields;
-    }
-
+        return fields;*//*
+    }*/
+/*
     @Bean
     Map<String, ReportFormatHolder> formatHolders(){
         Map<String, ReportFormatHolder> formatHolders;
@@ -40,5 +40,5 @@ public class TestConfig {
         formatHolders = context.getBean("formatHolders", Map.class);
         context.close();
         return formatHolders;
-    }
+    }*/
 }

@@ -7,15 +7,15 @@
                             http://www.springframework.org/schema/util
                             http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <util:map id="vfFieldsKrasnodar" map-class="java.util.HashMap">
-        <entry key="status">
+<!--    <util:map id="vfFieldsKrasnodar" map-class="java.util.HashMap">-->
+<!--        <entry key="status">-->
 
-        </entry>
-    </util:map>
+<!--        </entry>-->
+<!--    </util:map>-->
 
-    <util:list id="statusNames">
-        <value></value>
-    </util:list>
+<!--    <util:list id="statusNames">-->
+<!--        <value></value>-->
+<!--    </util:list>-->
 
 
 </beans>

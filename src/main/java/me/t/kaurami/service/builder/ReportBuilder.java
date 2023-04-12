@@ -4,6 +4,7 @@ import me.t.kaurami.service.bookEditor.BookEditor;
 import me.t.kaurami.service.bookReader.BookReader;
 import me.t.kaurami.service.bookWriter.BookWriter;
 import me.t.kaurami.service.bookWriter.StandardBookWriter;
+
 import me.t.kaurami.service.reportCreator.ReportCreator;
 import me.t.kaurami.service.setting.SettingHolder;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -46,9 +47,9 @@ public class ReportBuilder implements ApplicationContextAware {
         reader.loadBook(settingHolder.getSourceFile());
         LinkedList<LinkedList<String>> sourceData = reader.readSheet();
         logger.info("Source data successfully extracted!");
-        creator.setData(sourceData);
+//        creator.setData(sourceData);
         creator.setLimit(settingHolder.getLimit());
-        List<Exportable> reportData = creator.createReport();
+        List<Exportable> reportData = creator.createReport(sourceData);
         logger.info("The report has been successfully generated!");
         editor.setReportType(settingHolder.getType());
         editor.createReportFile(reportData);

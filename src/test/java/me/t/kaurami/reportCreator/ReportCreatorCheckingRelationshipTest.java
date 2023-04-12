@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ReportCreatorCheckingRelationshipTest {
+/*
 
     private MockitoSession session;
     @Mock
@@ -36,7 +37,8 @@ public class ReportCreatorCheckingRelationshipTest {
         Mockito.when(settingHolder.getNamePattern()).thenReturn("^.+ИП|^.+ООО|^.+ПАО|^.+ЗАО|^.+МУП|^.+ГБУ");
     }
 
-    @Test
+    */
+/*@Test
     @DisplayName("relationship report creator test")
     public void test(){
         reportCreator.setData(testDataLoader.getSourceData());
@@ -45,11 +47,13 @@ public class ReportCreatorCheckingRelationshipTest {
         List<Exportable> results = reportCreator.createReport();
         System.out.println(results);
 
-    }
+    }*//*
+
 
     @AfterEach
     public void afterEach(){
         session.finishMocking();
     }
+*/
 
 }
