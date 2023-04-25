@@ -1,5 +1,9 @@
 package me.t.kaurami.entities;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -10,6 +14,8 @@ import java.util.Date;
 @Table(name = "requests")
 public class Request implements Comparable<Request> {
 
+    @Version
+    private LocalDateTime version;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,13 +41,15 @@ public class Request implements Comparable<Request> {
     @Enumerated(EnumType.STRING)
     private Decision decision;
 
-    @Column(name = "request_date")
+    @Column(name = "request_date", nullable = false, updatable = false)
     @NotNull
-//    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime requestDate;
 
     @Column(name = "decision_date")
-//    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @UpdateTimestamp
     private LocalDateTime decisionDate;
 
     @Column(name = "request_commentary")

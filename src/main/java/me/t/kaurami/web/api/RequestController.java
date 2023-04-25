@@ -33,7 +33,6 @@ public class RequestController {
         return requestRepository.save(request);
     }
 
-    @Deprecated
     @PutMapping(path = "/{requestId}", consumes = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PreAuthorize("hasAuthority('CREATE_REQUEST')")

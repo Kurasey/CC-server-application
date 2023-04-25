@@ -30,7 +30,6 @@ public class TestConfig {
         context.close();
         return fields;*//*
     }*/
-/*
     @Bean
     Map<String, ReportFormatHolder> formatHolders(){
         Map<String, ReportFormatHolder> formatHolders;
@@ -40,5 +39,5 @@ public class TestConfig {
         formatHolders = context.getBean("formatHolders", Map.class);
         context.close();
         return formatHolders;
-    }*/
+    }
 }

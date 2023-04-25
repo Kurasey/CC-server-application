@@ -4,12 +4,9 @@ import me.t.kaurami.entities.Exportable;
 import me.t.kaurami.entities.MarketOwner;
 import me.t.kaurami.entities.MarketOwnerForRelationshipChecker;
 import me.t.kaurami.service.setting.SettingHolder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,6 +19,8 @@ public class ReportCreatorCheckingRelationship extends ReportCreator {
     public ReportCreatorCheckingRelationship(@Value(value = ("#{fields}")) Map<String, Map<String, List<String>>> fields, SettingHolder settingHolder) {
         super(fields);
         this.settingHolder = settingHolder;
+        System.out.println(fields);
+        System.out.println(settingHolder);
     }
 
     @Override

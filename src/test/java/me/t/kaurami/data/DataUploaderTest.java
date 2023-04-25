@@ -15,7 +15,6 @@ import static org.mockito.Mockito.*;
 
 public class DataUploaderTest {
 
-/*
     @Mock
     BookReader reader;
     @Mock
@@ -104,6 +103,5 @@ public class DataUploaderTest {
     void afterEach(){
         session.finishMocking();
     }
-*/
 
 }

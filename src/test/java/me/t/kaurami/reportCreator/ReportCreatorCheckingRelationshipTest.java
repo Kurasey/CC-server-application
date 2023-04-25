@@ -6,18 +6,24 @@ import me.t.kaurami.service.reportCreator.ReportCreatorCheckingRelationship;
 import me.t.kaurami.service.setting.SettingHolder;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.util.HashMap;
 import java.util.List;
 
+@SpringBootTest
 public class ReportCreatorCheckingRelationshipTest {
-/*
 
     private MockitoSession session;
-    @Mock
+
+    @MockBean
     SettingHolder settingHolder;
-    @Spy
+    @SpyBean
     ReportCreatorCheckingRelationship reportCreator;
+
+
 
 
     private static TestDataLoader testDataLoader;
@@ -34,26 +40,24 @@ public class ReportCreatorCheckingRelationshipTest {
     @BeforeEach
     private void initMock(){
         session = Mockito.mockitoSession().initMocks(this).startMocking();
+        System.out.println(Mockito.mockitoSession());
+        System.out.println(settingHolder);
         Mockito.when(settingHolder.getNamePattern()).thenReturn("^.+ИП|^.+ООО|^.+ПАО|^.+ЗАО|^.+МУП|^.+ГБУ");
+        Mockito.when(settingHolder.getType()).thenReturn(SettingHolder.ReportType.CHECKING_RELATIONSHIP);
     }
 
-    */
-/*@Test
+@Test
     @DisplayName("relationship report creator test")
     public void test(){
-        reportCreator.setData(testDataLoader.getSourceData());
-        reportCreator.setFields(testDataLoader.getFields());
-        reportCreator.setSettingHolder(settingHolder);
-        List<Exportable> results = reportCreator.createReport();
+        List<Exportable> results = reportCreator.createReport(testDataLoader.getSourceData());
         System.out.println(results);
 
-    }*//*
+    }
 
 
     @AfterEach
     public void afterEach(){
         session.finishMocking();
     }
-*/
 
 }

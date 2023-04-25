@@ -37,9 +37,6 @@ public class SettingHolder{
             return name;
         }
 
-//        public void setName(String name) {
-//            this.name = name;
-//        }
     }
 
     public SettingHolder(@Qualifier("settings") Map<String, ReportFormatHolder> settings, @Qualifier("availableDistricts") Map<String, String> availableDistricts) {

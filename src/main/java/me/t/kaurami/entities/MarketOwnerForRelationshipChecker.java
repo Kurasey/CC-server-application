@@ -41,7 +41,7 @@ public class MarketOwnerForRelationshipChecker extends MarketOwner implements Ex
         return values;
     }
 
-    private void createRecomendation() {
+    private void createRecomendation() { //rework to RecommendationService
         if (ownerNames.size()>1){
             recommendation += "Сократить количество хозяев сети. ";
         }

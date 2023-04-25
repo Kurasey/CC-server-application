@@ -9,10 +9,7 @@ spring:
     name: creatorcloud
   jpa:
     show-sql: true
-rest:
-  base-path: /data-api
 server:
-
   port: 60001
 logging:
   level:

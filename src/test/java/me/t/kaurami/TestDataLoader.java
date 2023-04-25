@@ -7,7 +7,7 @@ import java.util.*;
 
 public class TestDataLoader {
 
-/*    private LinkedList<LinkedList<String>> sourceData = new LinkedList<>();
+    private LinkedList<LinkedList<String>> sourceData = new LinkedList<>();
     private Map<String, Map<String, List<String>>> fields;
 
     public TestDataLoader(String filePath) {
@@ -31,11 +31,11 @@ public class TestDataLoader {
     }
 
     private void initFieldsMap() {
-   *//*     GenericXmlApplicationContext context = new GenericXmlApplicationContext();
+        GenericXmlApplicationContext context = new GenericXmlApplicationContext();
         context.load("app-context.xml");
         context.refresh();
         fields = context.getBean("fields", Map.class);
-        context.close();*//*
+        context.close();
     }
 
     public LinkedList<LinkedList<String>> getSourceData() {
@@ -48,5 +48,5 @@ public class TestDataLoader {
 
     public static void main(String[] args) {
         System.out.println(new TestDataLoader("C://TestData.txt").getSourceData());
-    }*/
+    }
 }

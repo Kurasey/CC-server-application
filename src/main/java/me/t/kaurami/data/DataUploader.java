@@ -4,6 +4,7 @@ import me.t.kaurami.entities.Agent;
 import me.t.kaurami.entities.Client;
 import me.t.kaurami.service.bookReader.BookReader;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.*;
@@ -53,6 +54,7 @@ public class DataUploader {
     public void setClientRepository(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
+
 
     public void uploadData(File file) throws Exception{
         initializeFields();
@@ -117,6 +119,8 @@ public class DataUploader {
         }
     }
 
+//    @Transactional
+//    @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 100))
     private void postToDB() {
         agentRepository.saveAll(agentMap.values());
         clientRepository.saveAll(clientMap.values());
