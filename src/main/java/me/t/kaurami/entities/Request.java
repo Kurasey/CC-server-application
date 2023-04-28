@@ -6,9 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "requests")
@@ -19,7 +17,6 @@ public class Request implements Comparable<Request> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
     private Long reqId;
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -62,28 +59,44 @@ public class Request implements Comparable<Request> {
         LIMIT("Увеличение кредитного лимита"), STOPLIST("Снять стоп-лист"),
         SEQURITYORDER("Направить запрос в СБ"), OTHER("Другое");
 
+        private String text;
 
-        private String name;
+        public static RequestType getByText(String text){
+            for(RequestType type: RequestType.values()){
+                if(type.text.equals(text)){
+                    return type;
+                }
+            }
+            return null;
+        }
 
-        RequestType(String name) {
-            this.name = name;
+        RequestType(String text) {
+            this.text = text;
         }
 
         @Override
         public String toString() {
-            return name;
+            return text;
         }
     }
 
     public enum Decision{
         AGREED("Согласовано", true), DISAGREED("Отказ", true), APPROVAL("На согласовании", false), ND("", false);
 
-        private String name;
+        private String text;
         private boolean completed;
 
-        Decision(String name, boolean completed) {
-            this.name = name;
+        Decision(String text, boolean completed) {
+            this.text = text;
             this.completed = completed;
+        }
+
+        public static Decision getByText(String text){
+            for (Decision d: Decision.values()){
+                if(d.text.equals(text))
+                    return d;
+            }
+            return null;
         }
 
         public boolean isCompleted() {
@@ -92,7 +105,7 @@ public class Request implements Comparable<Request> {
 
         @Override
         public String toString() {
-            return name;
+            return text;
         }
 
     }
@@ -102,6 +115,7 @@ public class Request implements Comparable<Request> {
         this.client = client;
         this.agent = agent;
         this.type = type;
+        this.decision = Decision.ND;
         this.commentary = commentary;
         this.requestDate = LocalDateTime.now();
     }
@@ -192,5 +206,18 @@ public class Request implements Comparable<Request> {
 
     public void setCommentary(String commentary) {
         this.commentary = commentary;
+    }
+
+    public LocalDateTime getVersion() {
+        return version;
+    }
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "version=" + version +
+                ", reqId=" + reqId +
+                ", client=" + client.getName() +
+                ", agent=" + agent.getShortName();
     }
 }

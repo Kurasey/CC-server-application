@@ -1,9 +1,14 @@
 package me.t.kaurami.web.api;
 
+import me.t.kaurami.data.AgentRepository;
+import me.t.kaurami.data.ClientRepository;
 import me.t.kaurami.data.RequestRepository;
+import me.t.kaurami.entities.Agent;
+import me.t.kaurami.entities.Client;
 import me.t.kaurami.entities.Request;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,30 +26,37 @@ public class RequestController {
 
     @GetMapping(params = "all")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAnyRole('CREDIT_CONTROLLER', 'ADMIN')")
+//    @PreAuthorize("hasAnyRole('CREDIT_CONTROLLER', 'ADMIN')")
     public Iterable<Request> getRequests() {
         return requestRepository.findAll();
     }
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('CREATE_REQUEST')")
+//    @PreAuthorize("hasAuthority('CREATE_REQUEST')")
     public Request saveRequest(@RequestBody @Valid Request request){
         return requestRepository.save(request);
     }
 
     @PutMapping(path = "/{requestId}", consumes = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @PreAuthorize("hasAuthority('CREATE_REQUEST')")
+//    @PreAuthorize("hasAuthority('CREATE_REQUEST')")
     public Request putRequest(@PathVariable("requestId") Long requestId,
                               @RequestBody @Valid Request request){
+
         return requestRepository.save(request);
     }
 
     @DeleteMapping("/{requestId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAuthority('DELETE_REQUEST')")
+//    @PreAuthorize("hasAuthority('DELETE_REQUEST')")
     public void deleteRequest(@PathVariable("requestId") Long requestId) {
         requestRepository.deleteById(requestId);
+    }
+
+    @GetMapping(params = "count")
+    @ResponseStatus(HttpStatus.OK)
+    public Long getCount(){
+        return requestRepository.count();
     }
 }

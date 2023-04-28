@@ -33,7 +33,6 @@ public class Client {
     private LocalDate contractDate;
 
     @Column(name = "address")
-    @NotBlank
     private String address;
 
     private Client(String name, String individualTaxpayerNumber, String accessId, String marketOwnerName,

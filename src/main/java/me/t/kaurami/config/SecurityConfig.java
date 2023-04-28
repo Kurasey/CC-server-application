@@ -45,10 +45,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .authorizeRequests()
-                .antMatchers("/adminmodule/**").hasRole("ADMIN")
-                .antMatchers("/", "/**").permitAll()
+//                .antMatchers("/adminmodule/**").hasRole("ADMIN")
+//                .antMatchers("/", "/**").permitAll()
 //                .and().httpBasic()
-                .and().formLogin()
+                .anyRequest().permitAll()
+                .and().csrf().disable().formLogin()
+//                .and().formLogin()
                 .and().logout().logoutSuccessUrl("/")
                 .and().build();
     }

@@ -19,8 +19,6 @@ public class ReportCreatorCheckingRelationship extends ReportCreator {
     public ReportCreatorCheckingRelationship(@Value(value = ("#{fields}")) Map<String, Map<String, List<String>>> fields, SettingHolder settingHolder) {
         super(fields);
         this.settingHolder = settingHolder;
-        System.out.println(fields);
-        System.out.println(settingHolder);
     }
 
     @Override

@@ -41,7 +41,7 @@
                 <entry key="agentName"><list><value>Агент</value></list></entry>
                 <entry key="folderName"><list><value>Группа клиента</value></list></entry>
                 <entry key="contractDate"><list><value>Нач. договора</value></list></entry>
-                <entry key="address"><list><value>Полный адрес:</value></list></entry>
+                <entry key="address"><list><value>адрес</value></list></entry>
             </map>
         </entry>
     </util:map>

@@ -3,6 +3,7 @@ package me.t.kaurami.data;
 import me.t.kaurami.entities.Agent;
 import me.t.kaurami.entities.Client;
 import me.t.kaurami.service.bookReader.BookReader;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +29,8 @@ public class DataUploader {
     private Map<String, Map<String, List<String>>> fields;
     private String nameOfSourceColumnMap = "CLIENTS_LIST";
 
+
+    @Autowired
     public DataUploader(BookReader reader, AgentRepository agentRepository, ClientRepository clientRepository) {
         this.reader = reader;
         this.agentRepository = agentRepository;

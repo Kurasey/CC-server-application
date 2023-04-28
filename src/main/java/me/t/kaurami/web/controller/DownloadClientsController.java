@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 
 @RequestMapping("/downloadclients")
-//@Controller
+@Controller
 public class DownloadClientsController {
 
     private DataUploader dataUploader;

@@ -13,8 +13,8 @@ server:
   port: 60001
 logging:
   level:
-    root: WARN
-    org.springframework.security: DEBUG
+    root: ERROR
+#    org.springframework.security: DEBUG
 
 
 
