@@ -5,21 +5,17 @@
     <meta charset="UTF-8">
     <title>XXI Century. CC report Module</title>
     <link rel="shortcut icon" href="images/icon.png" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/styles/styles.css}">
 </head>
 <body>
     <div th:object="${settingHolder}">
-
-        <p th:text="*{limit}"></p>
-        <p th:text="*{type}">text</p>
-        <p th:text="*{targetFile}">sourceFile</p>
-        <a th:href="*{targetFile}" download>download1</a>
-
-
+        <p th:if="*{limit}!=0">Установленное ограничение по кредитному лимиту: <i><span th:text="*{limit}"></span></i></p>
+        <p th:if="*{limit}==0"><s>Установленное ограничение по кредитному лимиту: <i><span th:text="*{limit}"></span></i></s></p>
+        <p>Выбранный тип отчета: <i><span th:text="*{type.name}"></span></i></p>
     </div>
     <div>
-        <a th:href="@{settingHolder.targetFile}" download>download</a>
-        <a th:href="@{/}">На главную</a>
+        <a href="/download?reportFile" methods="GET" download>Загрузить файл</a>
+        <a th:href="@{/}">Вернуться на главную страницу</a>
     </div>
-
 </body>
 </html>

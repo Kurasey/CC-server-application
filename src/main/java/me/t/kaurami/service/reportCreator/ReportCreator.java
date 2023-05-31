@@ -2,11 +2,10 @@ package me.t.kaurami.service.reportCreator;
 
 import me.t.kaurami.entities.Exportable;
 import me.t.kaurami.entities.MarketOwner;
+import me.t.kaurami.service.bookReader.NotValidWorkbookException;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class ReportCreator {
 
@@ -20,15 +19,27 @@ public abstract class ReportCreator {
         this.fields = fields;
     }
 
+    /**
+     * Basic data processing
+     * @param data Source data for report
+     * @param ownerHashMap Map client owner entity
+     * @param columnNumbers Matching the required columns in source data
+     */
     protected abstract void generateReport(List<LinkedList<String>> data, Map<String, MarketOwner> ownerHashMap, Map<String, Integer> columnNumbers);
 
     protected abstract List<Exportable> castToExportable(Map<String, MarketOwner> ownerHashMap);
 
     protected abstract String getReportType();
 
-    public final List<Exportable> createReport(LinkedList<LinkedList<String>> sourceData) {
+    /**
+     * Cycle processing report data
+     * @param sourceData
+     * @return
+     */
+    public List<Exportable> createReport(LinkedList<LinkedList<String>> sourceData) throws NotValidWorkbookException{
         data = sourceData;
         fillColumnNumbers(fields);
+        checkingForTheRequiredFields();
         data.removeFirst();
         generateReport(data, ownerHashMap, columnNumbers);
         List<Exportable> exportables = castToExportable(ownerHashMap);
@@ -40,6 +51,11 @@ public abstract class ReportCreator {
         this.creditLimitLevel = limit;
     }
 
+    /**
+     * Additional data processing (Optional)
+     * @param exportables
+     * @return
+     */
     protected List<Exportable> additionalProcessing(List<Exportable> exportables){
         return exportables;
     }
@@ -50,8 +66,7 @@ public abstract class ReportCreator {
 
     private void fillColumnNumbers(Map<String, Map<String, List<String>>> fields){
         Map<String, List<String>> sourceFields = fields.get(getReportType());
-        System.err.println(getReportType());
-        System.err.println(sourceFields);
+        sourceFields.keySet().stream().forEach(f->columnNumbers.put(f, null));
         for (String columnName: data.getFirst()){
             for (Map.Entry entry: sourceFields.entrySet()) {
                 if (((List<String>) entry.getValue()).contains(columnName)) {
@@ -61,4 +76,19 @@ public abstract class ReportCreator {
         }
     }
 
+    private void checkingForTheRequiredFields() throws NotValidWorkbookException{
+        List<List<String>> lostColumns = columnNumbers.entrySet().stream()
+                .filter(e -> e.getValue() == null)
+                .map(e->fields.get(getReportType()).get(e.getKey()))
+                .collect(Collectors.toList());
+        if (!lostColumns.isEmpty()){
+            String message = String.format("Книга не содержит обязательные столбцы: %s. " +
+                    " Выполнение операции невозможно.", lostColumns.toString()
+                    .replace("[[", "\"")
+                    .replace("]]", "\"")
+                    .replace(", ", "\" или \"")
+                    .replace("]\" или \"[", "\", \""));
+            throw new NotValidWorkbookException(message);
+        }
+    }
 }

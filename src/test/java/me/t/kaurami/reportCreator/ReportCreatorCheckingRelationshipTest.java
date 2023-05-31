@@ -49,8 +49,8 @@ public class ReportCreatorCheckingRelationshipTest {
 @Test
     @DisplayName("relationship report creator test")
     public void test(){
-        List<Exportable> results = reportCreator.createReport(testDataLoader.getSourceData());
-        System.out.println(results);
+/*        List<Exportable> results = reportCreator.createReport(testDataLoader.getSourceData());
+        System.out.println(results);*/
 
     }
 

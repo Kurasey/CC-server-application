@@ -5,12 +5,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.io.File;
 import java.util.Map;
 
-@Service
+@Component
+@SessionScope
 @ConfigurationProperties(prefix = "market-owner")
 public class SettingHolder{
 

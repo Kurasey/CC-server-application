@@ -4,14 +4,15 @@ import me.t.kaurami.entities.Exportable;
 import me.t.kaurami.entities.MarketOwner;
 import me.t.kaurami.entities.MarketOwnerVolumeForming;
 import me.t.kaurami.service.setting.SettingHolder;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service("VOLUME_FORMING_reportCreator")
+@RequestScope
 public class ReportCreatorVolumeFormingClientList extends ReportCreator {
 
     private SettingHolder settingHolder;
@@ -34,7 +35,6 @@ public class ReportCreatorVolumeFormingClientList extends ReportCreator {
     @Override
     protected void generateReport(List<LinkedList<String>> data, Map<String, MarketOwner> ownerHashMap, Map<String, Integer> columnNumbers) {
         String individualTaxpayerNumber;
-
         for (LinkedList<String> linkedList: data){
             individualTaxpayerNumber = linkedList.get(columnNumbers.get("idividualTaxpayerNumber"));
             if (ownerHashMap.containsKey(individualTaxpayerNumber)){

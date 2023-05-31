@@ -1,11 +1,13 @@
-package me.t.kaurami.data;
+package me.t.kaurami.service.databaseplaseholder;
 
+import me.t.kaurami.data.AgentRepository;
+import me.t.kaurami.data.ClientRepository;
 import me.t.kaurami.entities.Agent;
 import me.t.kaurami.entities.Client;
 import me.t.kaurami.service.bookReader.BookReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.annotation.RequestScope;
 
 import javax.annotation.Resource;
 import java.io.*;
@@ -13,14 +15,17 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-
+/**
+ * Database placeholder. Facade for extract data from .xls or .xlsx workbook, create entities and save them to database
+ */
 @Service
-public class DataUploader {
+@RequestScope
+public class ExcelDataBasePlaceholder {
 
     private BookReader reader;
     private AgentRepository agentRepository;
     private ClientRepository clientRepository;
-    LinkedList<LinkedList<String>> sourceData;
+    private LinkedList<LinkedList<String>> sourceData;
     private Map<String, Integer> columnNumbers;
     private Map<String, Agent> agentMap;
     private Map<String, Client> clientMap;
@@ -31,17 +36,19 @@ public class DataUploader {
 
 
     @Autowired
-    public DataUploader(BookReader reader, AgentRepository agentRepository, ClientRepository clientRepository) {
+    public ExcelDataBasePlaceholder(BookReader reader, AgentRepository agentRepository, ClientRepository clientRepository) {
         this.reader = reader;
         this.agentRepository = agentRepository;
         this.clientRepository = clientRepository;
     }
 
-    private DataUploader() {
+    private ExcelDataBasePlaceholder() {
     }
 
 
-
+    /**
+     * @param reader BookReader. Consumer of source data from file
+     */
     public void setReader(BookReader reader) {
         this.reader = reader;
     }
@@ -58,7 +65,11 @@ public class DataUploader {
         this.clientRepository = clientRepository;
     }
 
-
+    /**
+     * Full cycle of extract data and fill database
+     * @param file
+     * @throws Exception
+     */
     public void uploadData(File file) throws Exception{
         initializeFields();
         agentMap = new HashMap<>();
@@ -76,7 +87,7 @@ public class DataUploader {
                 agentMap.put(agentName, Agent.newAgent(list.get(columnNumbers.get("folderName")), list.get(columnNumbers.get("agentName"))));
             }
             if (!clientMap.containsKey(clientID)){
-                clientMap.put(clientID, new Client.ClientBuilder()
+                clientMap.put(clientID, Client.builder()
                         .accessID(clientID)
                         .agent(agentMap.get(agentName))
                         .name(list.get(columnNumbers.get("name")))

@@ -1,7 +1,7 @@
 package me.t.kaurami.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import me.t.kaurami.config.SecurityConfig;
+import me.t.kaurami.security.SecurityConfig;
 import me.t.kaurami.data.RequestRepository;
 import me.t.kaurami.entities.Agent;
 import me.t.kaurami.entities.Client;
@@ -54,7 +54,7 @@ public class RequestRestControllerTest {
     @WithMockUser(authorities = "CREATE_REQUEST")
     void whenPostValidRequestThenOk() throws Exception{
         Agent agent = Agent.newAgent("ad", "das");
-        Client client = new Client.ClientBuilder().accessID("1231231").name("asdasd").individualTaxpayerNumber("234234234").agent(agent).build();
+        Client client = Client.builder().accessID("1231231").name("asdasd").individualTaxpayerNumber("234234234").agent(agent).build();
         String content = objectMapper.writeValueAsString(
                 new Request(client, agent, Request.RequestType.LIMIT,""));
         mockMvc.perform(MockMvcRequestBuilders.post("/requests").with(csrf()).content(content).contentType(MediaType.APPLICATION_JSON))

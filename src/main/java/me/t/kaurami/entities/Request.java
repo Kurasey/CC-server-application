@@ -8,50 +8,77 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+/**
+ * Entity representing a request from agents about shipment
+ */
 @Entity
 @Table(name = "requests")
 public class Request implements Comparable<Request> {
 
+    /**
+     * Version for optimistic lock
+     */
     @Version
     private LocalDateTime version;
 
+    /**
+     * Id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long reqId;
 
+    /**
+     * Trade point
+     */
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_access_id")
     @NotNull
     private Client client;
 
+    /**
+     * Sales manager, also the source of request
+     */
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "agent_name")
     @NotNull
     private Agent agent;
-
+    /**
+     * The essence of the request
+     */
     @Column(name = "request_type")
     @Enumerated(EnumType.STRING)
     @NotNull
     private RequestType type;
-
+    /**
+     * Decision of request
+     */
     @Column(name = "request_decision")
     @Enumerated(EnumType.STRING)
     private Decision decision;
-
+    /**
+     * Date and time of request create
+     */
     @Column(name = "request_date", nullable = false, updatable = false)
     @NotNull
     @CreationTimestamp
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime requestDate;
-
+    /**
+     * Date and time accept of decision
+     */
     @Column(name = "decision_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @UpdateTimestamp
     private LocalDateTime decisionDate;
-
+    /**
+     * Commentary when creating
+     */
     @Column(name = "request_commentary")
     private String commentary;
-
+    /**
+     * Commentary when decision-making
+     */
     @Column(name = "decision_cause")
     private String decisionCause;
 
@@ -110,6 +137,37 @@ public class Request implements Comparable<Request> {
 
     }
 
+    public static final class RequestBuilder{
+        private Client client;
+        private Agent agent;
+        private RequestType type;
+        private String commentary;
+
+        public RequestBuilder client(Client client) {
+            this.client = client;
+            return this;
+        }
+
+        public RequestBuilder agent(Agent agent) {
+            this.agent = agent;
+            return this;
+        }
+
+        public RequestBuilder type(RequestType type) {
+            this.type = type;
+            return this;
+        }
+
+        public RequestBuilder commentary(String commentary) {
+            this.commentary = commentary;
+            return this;
+        }
+
+        public Request build(){
+            return new Request(client, agent, type, commentary);
+        }
+    }
+
     public Request(Client client, Agent agent, RequestType type, String commentary) {
         this.reqId = 1l;
         this.client = client;
@@ -123,17 +181,13 @@ public class Request implements Comparable<Request> {
     private Request() {
     }
 
+    public static RequestBuilder builder(){
+        return new RequestBuilder();
+    }
+
     public void setDecision(Decision decision) {
         this.decision = decision;
     }
-
-/*    public String getClientAccessId() {
-        return clientAccessId;
-    }
-
-    public String getAgentName() {
-        return agentName;
-    }*/
 
     public RequestType getType() {
         return type;

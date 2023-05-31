@@ -2,12 +2,29 @@ package me.t.kaurami.entities;
 
 import java.util.HashMap;
 
+/**
+ * Entity representing a customer for create of volume forming client list
+ */
 public class MarketOwnerVolumeForming extends MarketOwner implements Exportable {
-
+    /**
+     * Individual taxpayer number
+     */
     private String idividualTaxpayerNumber;
+    /**
+     * Count of trade point of the customer
+     */
     private int marketCount;
+    /**
+     * Sum of credit lines of all trade point of the customer
+     */
     private int summaryCreditLine;
+    /**
+     * Agreed deferred payment of the client
+     */
     private int deferredPayment;
+    /**
+     * Sum of turnover of all trade point of the customer
+     */
     private int summaryTurnover;
 
     public MarketOwnerVolumeForming(String name, String idividualTaxpayerNumber, int summaryCreditLine, int deferredPayment, int summaryTurnover) {
@@ -23,11 +40,17 @@ public class MarketOwnerVolumeForming extends MarketOwner implements Exportable 
         this.summaryTurnover = summaryTurnover;
     }
 
-    public void addMarket(int summaryCreditLine, int deferredPayment, int summaryTurnover){
+    /**
+     * Add information about trade point to customer entity
+     * @param creditLine Credit line of trade point
+     * @param deferredPayment deferred payment of trade point
+     * @param turnover Turnover of trade point
+     */
+    public void addMarket(int creditLine, int deferredPayment, int turnover){
         this.marketCount += 1;
-        this.summaryCreditLine += summaryCreditLine;
+        this.summaryCreditLine += creditLine;
         this.deferredPayment = deferredPayment > this.deferredPayment ? deferredPayment : this.deferredPayment;
-        this.summaryTurnover += summaryTurnover;
+        this.summaryTurnover += turnover;
     }
 
     public String getIdividualTaxpayerNumber() {
@@ -63,6 +86,11 @@ public class MarketOwnerVolumeForming extends MarketOwner implements Exportable 
         return values;
     }
 
+    /**
+     * Check for valid individual taxpayer number
+     * @param idividualTaxpayerNumber Individual taxpayer number
+     * @return "True" if is number
+     */
     private boolean isCorrectITN(String idividualTaxpayerNumber){
         if (idividualTaxpayerNumber.matches("\\d+")){
             return true;

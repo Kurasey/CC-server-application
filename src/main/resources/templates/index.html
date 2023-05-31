@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://thymeleaf.org"
->
+      xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>XXI Century. CC application</title>
     <link rel="shortcut icon" href="images/icon.png" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/styles/styles.css}">
 </head>
 <body>
     <h3>Доступные модули:</h3>
-    <div>
-        <a href="/reportmodule/selecttype">Формирование отчета</a>
+    <div th:if="${@availableFromHomepageList.isEmpty}">
+        <p>Нет доступных модулей</p>
     </div>
-    <div>
-        <a href="/adminmodule/homepage">Администрирование</a>
+    <div  th:each="page: ${@availableFromHomepageList}">
+        <a th:text="${page.getName}" th:href="${page.getReference}"></a>
     </div>
-    <div>
-        <a href="/downloadclients/">Загрузить список клиентов в БД</a>
-    </div>
-
 </body>
 </html>

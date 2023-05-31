@@ -12,12 +12,12 @@
     <util:map id="fields">
         <entry key="CHECKING_RELATIONSHIP">
             <map>
-                <entry key="status"><list><value>Статус</value></list></entry>
+                <entry key="status"><list><value>Статус</value><value>Статус:</value></list></entry>
                 <entry key="individualTaxpayerNumber"><list><value>ИНН</value></list></entry>
-                <entry key="name"><list><value>Клиент</value></list></entry>
-                <entry key="defrredPayment"><list><value>Кол_Дн_ТК</value></list></entry>
-                <entry key="creditLine"><list><value>Лимит (Сумма)</value></list></entry>
-                <entry key="ownerName"><list><value>Хозяева сети</value><value>Хозяин (сети):</value></list></entry>
+                <entry key="name"><list><value>Клиент</value><value>Клиент:</value></list></entry>
+                <entry key="defrredPayment"><list><value>Кол_Дн_ТК</value><value>Кол_Дн_ТК:</value></list></entry>
+                <entry key="creditLine"><list><value>Лимит (Сумма)</value><value>Сумма_ТК:</value></list></entry>
+                <entry key="ownerName"><list><value>Хозяева сети</value><value>Хозяин (сети):</value><value>Хозяин Сети</value></list></entry>
             </map>
         </entry>
 

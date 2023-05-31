@@ -4,18 +4,23 @@ import me.t.kaurami.entities.Exportable;
 import me.t.kaurami.entities.MarketOwner;
 import me.t.kaurami.entities.MarketOwnerForRelationshipChecker;
 import me.t.kaurami.service.setting.SettingHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service("CHECKING_RELATIONSHIP_reportCreator")
-public class ReportCreatorCheckingRelationship extends ReportCreator {
+@RequestScope
+public class ReportCreatorCheckingRelationship extends ReportCreator{
 
-    SettingHolder settingHolder;
+    private SettingHolder settingHolder;
 
-
+    @Autowired
     public ReportCreatorCheckingRelationship(@Value(value = ("#{fields}")) Map<String, Map<String, List<String>>> fields, SettingHolder settingHolder) {
         super(fields);
         this.settingHolder = settingHolder;

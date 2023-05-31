@@ -2,19 +2,70 @@ market-owner:
   name-pattern: ^.+ИП|^.+ООО|^.+ПАО|^.+ЗАО|^.+МУП|^.+ГБУ
   name-Pattern: t
   test: 1
+actuator-manager:
+  username: actuator_manager
+  password: c8ed587a-6954-4ddf-87b2-a5164fdfd822
 
 spring:
-  datasource:
-    generate-unique-name: false
-    name: creatorcloud
+  application:
+    name: Report module
+  profiles:
+    active:
+    - h2
+  boot:
+    admin:
+      client:
+        url: http://localhost:60002
+        instance:
+          metadata:
+            user:
+              name: ${actuator-manager.username}
+              password: ${actuator-manager.password}
   jpa:
     show-sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9000/oauth2/jwks
 server:
   port: 60001
 logging:
   level:
     root: ERROR
-#    org.springframework.security: DEBUG
+    org.springframework.security: DEBUG
+    me.t.kaurami: INFO
+management:
+  endpoints:
+    web:
+      base-path: /management
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: when-authorized
 
+---
+spring:
+  config:
+    activate:
+      on-profile: postgres
+  datasource:
+    username: postgres
+    password: kKu7fNds
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=ccModule
+    driver-class: org.postgresql.Driver
 
-
+---
+spring:
+  config:
+    activate:
+      on-profile: h2
+  h2:
+    console:
+      path: /db-console
+      enabled: true
+  datasource:
+    generate-unique-name: false
+    name: creatorcloud
+    url: jdbc:h2:mem:creatorcloud

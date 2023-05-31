@@ -5,14 +5,7 @@
     <meta charset="UTF-8">
     <title>XXI Century. CC report Module</title>
     <link rel="shortcut icon" href="images/icon.png" type="image/x-icon">
-
-    <style>
-<!--    ПОКА НЕ РАБОТАЕТ-->
-        warning.h3 {
-            color: red;
-        }
-    </style>
-
+    <link rel="stylesheet" th:href="@{/styles/styles.css}">
 </head>
 <body>
     <h1>Параметры отчета</h1>
@@ -25,28 +18,12 @@
             Файл с исходными данными:
             <input type="file" name="sourceFile">
         </div>
-        <div th:if="*{type.toString()} == 'VOLUME_FORMING'" class="warning">
+        <div class="warning">
             <h3>ВНИМАНИЕ! ФАЙЛ ДОЛЖЕН СОДЕРЖАТЬ ОБЯЗАТЕЛЬНЫЕ ПОЛЯ:</h3>
-            <ul>
-                <li><p>Имя клиента</p></li>
-                <li><p>ТО чистый период</p></li>
-                <li><p>Товарный кредит,дн</p></li>
-                <li><p>Лимит кредита из карты</p></li>
-                <li><p>ИНН</p></li>
+            <ul  th:each="map: ${@fields.get(settingHolder.type.toString())}">
+                <li th:text="${map.getValue.toString().replace('[', '').replace(']', '').replace(',', ' или')}">ListOfNames</li>
             </ul>
         </div>
-        <div th:if="*{type.toString()} == 'CHECKING_RELATIONSHIP'" class="warning">
-            <h3 class="warning">ВНИМАНИЕ! ФАЙЛ ДОЛЖЕН СОДЕРЖАТЬ ОБЯЗАТЕЛЬНЫЕ ПОЛЯ:</h3>
-            <ul>
-                <li><p>Статус</p></li>
-                <li><p>ИНН</p></li>
-                <li><p>Имя клиента</p></li>
-                <li><p>Товарный кредит,дн</p></li>
-                <li><p>Лимит кредита из карты</p></li>
-                <li><p>Хозяин сети</p></li>
-            </ul>
-        </div>
-
         <div>
             <button>Пуск</button>
         </div>

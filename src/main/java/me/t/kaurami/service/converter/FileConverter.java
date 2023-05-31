@@ -6,6 +6,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 
+/**
+ * Converter for download workbook from Controller
+ */
 @Component
 public class FileConverter implements Converter<MultipartFile, File> {
     @Override

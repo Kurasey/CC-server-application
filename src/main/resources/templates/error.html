@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ERROR</title>
+    <link rel="stylesheet" th:href="@{/styles/styles.css}">
+</head>
+<body>
+<h3 class="error">Ошибка!</h3>
+    <p th:text="${exception.getMessage()}" class="error"/>
+    <p class="error">Класс ошибки: <span th:text="${exception.getClass().getSimpleName()}">НЕИЗВЕСТЕН</span></p>
+    <a href="/error?reset" methods="GET">Сброс значений и возврат на главную страницу</a>
+</body>
+</html>

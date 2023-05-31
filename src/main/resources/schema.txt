@@ -46,17 +46,3 @@ CREATE TABLE IF NOT EXISTS authorities(
     authority varchar NOT NULL,
     CONSTRAINT user_role UNIQUE (username, authority)
 );
-
-CREATE OR REPLACE FUNCTION get_agents(IN name varchar DEFAULT '') RETURNS SETOF agents $$
-    SELECT * FROM agents
-    WHERE agent_name = name
-$$ LANGUAGE SQL;
-
-CREATE OR REPLACE FUNCTION get_clients() RETURNS SETOF clients $$
-    SELECT * FROM clients
-$$ LANGUAGE SQL;
-
-CREATE OR REPLACE FUNCTION get_clients(IN ag_name varchar) RETURNS SETOF clients $$
-    SELECT * FROM clients
-    WHERE agent_name = ag_name
-$$ LANGUAGE SQL;

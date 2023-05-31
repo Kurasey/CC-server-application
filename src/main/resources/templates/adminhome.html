@@ -6,8 +6,15 @@
     <meta charset="UTF-8">
     <title>XXI Century. CC report Module</title>
     <link rel="shortcut icon" href="images/icon.png" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/styles/styles.css}">
 </head>
 <body>
-    <a href="/logout">Выйти</a>
+    <h1>Доступные модули</h1>
+    <div th:if="${@availableFromAdminPageList.isEmpty}">
+        <p>Нет доступных модулей</p>
+    </div>
+    <div  th:each="page: ${@availableFromAdminPageList}">
+        <a th:text="${page.getName}" th:href="${page.getReference}"></a>
+    </div>
 </body>
 </html>

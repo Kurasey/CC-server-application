@@ -5,12 +5,11 @@ import me.t.kaurami.data.AgentRepository;
 import me.t.kaurami.entities.Agent;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/agents", produces = "application/json")
-@CrossOrigin(origins = "http://localhost:60001")
+@RequestMapping(path = "/api/agents", produces = "application/json")
+@CrossOrigin(origins = "http://localhost:8080")
 public class AgentController{
 
     private AgentRepository agentRepository;
@@ -20,7 +19,6 @@ public class AgentController{
     }
 
     @GetMapping(params = "all")
-//    @PreAuthorize("hasAuthority('READ_AGENTS')")
     public ResponseEntity<Iterable<Agent>> getAgents(){
         Iterable<Agent> agents = agentRepository.findAll();
         if (agents.iterator().hasNext()) {

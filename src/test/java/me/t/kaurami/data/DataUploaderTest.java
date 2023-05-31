@@ -5,6 +5,7 @@ import me.t.kaurami.TestDataLoader;
 import me.t.kaurami.entities.Agent;
 import me.t.kaurami.entities.Client;
 import me.t.kaurami.service.bookReader.BookReader;
+import me.t.kaurami.service.databaseplaseholder.ExcelDataBasePlaceholder;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
 
@@ -22,7 +23,7 @@ public class DataUploaderTest {
     @Mock
     ClientRepository clientRepository;
     @Spy
-    DataUploader dbController;
+    ExcelDataBasePlaceholder dbController;
 
     static TestDataLoader testDataLoader;
     static Map<String, Integer> controlValues;

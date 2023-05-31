@@ -3,10 +3,16 @@ package me.t.kaurami.entities;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * Entity representing a customer for reports
+ */
 public abstract class MarketOwner implements Comparable<MarketOwner> {
 
+    /**
+     * The pattern of converting a name into a more visual form.
+     */
     private static String namePattern = ".+";
+
 
     private final String name;
     private Matcher matcher;

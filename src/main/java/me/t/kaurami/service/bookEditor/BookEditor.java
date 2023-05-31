@@ -10,11 +10,9 @@ import java.util.List;
 public interface BookEditor {
     public void setWorkbook(Workbook workbook);
 
-    public void createReportFile(List<Exportable> report);
+    public Workbook createReportFile(List<Exportable> report);
 
     public boolean setReportType(SettingHolder.ReportType type);
-
-    public Workbook getWorkbook();
 
     public void setSetting(ReportFormatHolder setting);
 }

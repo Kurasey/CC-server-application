@@ -5,33 +5,51 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
+/**
+ * Entity representing a customer.
+ * The sales manager receives orders from customers, receives payment for the delivered goods.
+ */
 @Entity
 @Table(name = "clients")
 public class Client {
-
+    /**
+     * Client id in the Access database (unique)
+     */
     @Id
     @Column(name = "access_id")
     @NotNull
     private String accessID;
-
+    /**
+     * Sales manager responsible for working with the client
+     */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "agent_name")
     @NotNull
     private Agent agent;
-
+    /**
+     * Client name
+     */
     @Column(name = "name")
     @NotBlank
     private String name;
-
+    /**
+     * Individual taxpayer number
+     */
     @Column(name = "individual_taxpayer_number")
     private String individualTaxpayerNumber;
-
+    /**
+     * The name of the retail marker in Access (set manually for link the debts of several outlets)
+     */
     @Column(name = "market_owner_name")
     private String marketOwnerName;
-
+    /**
+     * Date of conclusion of the delivery contract
+     */
     @Column(name = "contract_date")
     private LocalDate contractDate;
-
+    /**
+     * Trade point address
+     */
     @Column(name = "address")
     private String address;
 
@@ -46,10 +64,14 @@ public class Client {
         this.agent = agent;
     }
 
+    public static ClientBuilder builder(){
+        return new ClientBuilder();
+    }
+
     private Client(){
     }
 
-    public static class ClientBuilder{
+    public static final class ClientBuilder{
 
         private String accessID;
         private Agent agent;

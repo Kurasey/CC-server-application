@@ -2,6 +2,7 @@ package me.t.kaurami.service.builder;
 import me.t.kaurami.entities.Exportable;
 import me.t.kaurami.service.bookEditor.BookEditor;
 import me.t.kaurami.service.bookReader.BookReader;
+import me.t.kaurami.service.bookReader.NotValidWorkbookException;
 import me.t.kaurami.service.bookWriter.BookWriter;
 import me.t.kaurami.service.bookWriter.StandardBookWriter;
 
@@ -17,12 +18,19 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
+import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.context.annotation.SessionScope;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Facade report building
+ */
 @Service
+@RequestScope
 public class ReportBuilder implements ApplicationContextAware {
 
     private static Logger logger = LoggerFactory.getLogger(ReportBuilder.class);
@@ -39,28 +47,26 @@ public class ReportBuilder implements ApplicationContextAware {
         this.editor = editor;
     }
 
-    public void buildReport() throws IOException, InvalidFormatException {
+    /**
+     * Full cycle of report generation
+     * @throws IOException
+     * @throws NotValidWorkbookException
+     */
+    public void buildReport() throws IOException, NotValidWorkbookException {
         StopWatch stopWatch = new StopWatch();
-        logger.info("Creating report... " + settingHolder.getType());
+        logger.info("Generating report... " + settingHolder.getType());
         stopWatch.start();
         creator = applicationContext.getBean(settingHolder.getType() + "_reportCreator", ReportCreator.class);
         reader.loadBook(settingHolder.getSourceFile());
         LinkedList<LinkedList<String>> sourceData = reader.readSheet();
         logger.info("Source data successfully extracted!");
-//        creator.setData(sourceData);
         creator.setLimit(settingHolder.getLimit());
         List<Exportable> reportData = creator.createReport(sourceData);
-        logger.info("The report has been successfully generated!");
         editor.setReportType(settingHolder.getType());
-        editor.createReportFile(reportData);
-        Workbook workbook = editor.getWorkbook();
-        logger.info("The report has been successfully written to a book");
-        BookWriter writer = new StandardBookWriter();
-        writer.writeBook("C:/testBook", workbook);
-        settingHolder.setTargetFile(workbook);                                              //не работает загрузка
+        Workbook workbook = editor.createReportFile(reportData);
+        settingHolder.setTargetFile(workbook);
         stopWatch.stop();
-        logger.info("The process is completed");
-        logger.info("Spent time:" + stopWatch.getTotalTimeMillis() + " ms");
+        logger.info("The generating report is successfully completed \nSpent time:" + stopWatch.getTotalTimeMillis() + " ms");
     }
 
     @Override
