@@ -25,7 +25,7 @@ public class ExcelDataBasePlaceholder {
     private BookReader reader;
     private AgentRepository agentRepository;
     private ClientRepository clientRepository;
-    private LinkedList<LinkedList<String>> sourceData;
+    private List<List<String>> sourceData;
     private Map<String, Integer> columnNumbers;
     private Map<String, Agent> agentMap;
     private Map<String, Client> clientMap;
@@ -77,10 +77,10 @@ public class ExcelDataBasePlaceholder {
         reader.loadBook(file);
         sourceData = reader.readSheet();
         fillColumnNumbers(fields);
-        sourceData.removeFirst();
+        sourceData.remove(0);
         String agentName;
         String clientID;
-        for (LinkedList<String> list : sourceData) {
+        for (List<String> list : sourceData) {
             agentName = list.get(columnNumbers.get("agentName"));
             clientID = list.get(columnNumbers.get("accessID"));
             if (!agentMap.containsKey(agentName)){
@@ -124,10 +124,10 @@ public class ExcelDataBasePlaceholder {
     private void fillColumnNumbers(Map<String, Map<String, List<String>>> fields){
 
         Map<String, List<String>> sourceFields = fields.get(nameOfSourceColumnMap);
-        for (String columnName: sourceData.getFirst()){
+        for (String columnName: sourceData.get(0)){
             for (Map.Entry entry: sourceFields.entrySet()) {
                 if (((List<String>) entry.getValue()).contains(columnName)) {
-                    columnNumbers.put((String) entry.getKey(), sourceData.getFirst().indexOf(columnName));
+                    columnNumbers.put((String) entry.getKey(), sourceData.get(0).indexOf(columnName));
                 }
             }
         }

@@ -40,7 +40,7 @@ public class DataUploaderTest {
 
 
     MockitoSession session;
-    LinkedList<LinkedList<String>> data;
+    List<List<String>> data;
     Map<String, Map<String, List<String>>> fields = new HashMap<>();
     Map<Agent, List<Client>> result;
 

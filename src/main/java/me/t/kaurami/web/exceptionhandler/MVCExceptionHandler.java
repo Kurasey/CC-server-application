@@ -4,7 +4,6 @@ import me.t.kaurami.service.bookReader.NotValidWorkbookException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
 @RequestMapping("/error")
@@ -18,10 +17,6 @@ public class MVCExceptionHandler{
     @ExceptionHandler({Exception.class})
     public String otherExceptionHandler(Exception e, Model model) {
         model.addAttribute("exception", e);
-        for (int i = 0; i<30; i++){
-            e.printStackTrace();
-        }
-        System.exit(0);
         return "error";
     }
 

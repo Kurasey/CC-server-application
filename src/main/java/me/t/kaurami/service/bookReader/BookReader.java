@@ -5,7 +5,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -19,7 +18,7 @@ public interface BookReader {
      * @throws IOException
      * @throws NotValidWorkbookException not valid file format
      */
-    void loadBook (File file) throws IOException, NotValidWorkbookException;
+    void loadBook (File file) throws IOException;
 
     /**
      * Select sheet by number for extracting
@@ -46,10 +45,10 @@ public interface BookReader {
     List<String> getSheetsNames();
 
     /**
-     * Read selected sheet and extract row to LinkedList(LinkedList) and columns to LinkedList(String)
-     * @return LinkedList columns input LinkedList rows
+     * Read selected sheet and extract row to Lis(List) and columns to List(String)
+     * @return List columns input List rows
      */
-    LinkedList<LinkedList<String>> readSheet();
+    List<List<String>> readSheet();
 
     /**
      * Get current workbook

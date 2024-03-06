@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>kaurami.me.t</groupId>
 	<artifactId>cc-server</artifactId>
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.5.1-SNAPSHOT</version>
 	<name>cc-server-application</name>
 	<description>Server application for credit controllers</description>
 	<properties>

@@ -31,7 +31,7 @@ public class RequestController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Iterable<Request> getRequ() {
+    public Iterable<Request> getRequest() {
         return requestRepository.findAll();
     }
 

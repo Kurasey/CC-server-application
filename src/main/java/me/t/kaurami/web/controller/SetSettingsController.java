@@ -1,6 +1,6 @@
 package me.t.kaurami.web.controller;
 
-import me.t.kaurami.service.builder.ReportBuilder;
+import me.t.kaurami.service.reportprocessmanager.ReportProcessManager;
 import me.t.kaurami.service.setting.SettingHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +11,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class SetSettingsController {
 
-    private ReportBuilder reportBuilder;
+    private ReportProcessManager reportProcessManager;
 
-    public SetSettingsController(ReportBuilder reportBuilder) {
-        this.reportBuilder = reportBuilder;
+    public SetSettingsController(ReportProcessManager reportProcessManager) {
+        this.reportProcessManager = reportProcessManager;
     }
 
     @GetMapping()
@@ -24,7 +24,7 @@ public class SetSettingsController {
 
     @PostMapping()
     public String createReport(@RequestParam("sourceFile")MultipartFile multipartFile, @ModelAttribute("settingHolder") SettingHolder applicationSettings) throws Exception{
-        reportBuilder.buildReport();
+        reportProcessManager.buildReport();
         return "redirect:/download";
     }
 }

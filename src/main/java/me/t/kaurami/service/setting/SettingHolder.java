@@ -7,20 +7,24 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.context.annotation.SessionScope;
 
+import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.util.Map;
 
 @Component
 @SessionScope
 @ConfigurationProperties(prefix = "market-owner")
+@Validated
 public class SettingHolder{
 
     private static Logger logger = LoggerFactory.getLogger(SettingHolder.class);
 
     private final Map<String, ReportFormatHolder> settings;
     private final Map<String, String> availableDistricts;
+    @NotNull
     private String namePattern;
     private File sourceFile;
     private long limit;

@@ -3,12 +3,11 @@ package me.t.kaurami.service.setting;
 import org.apache.poi.ss.usermodel.*;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ReportFormatHolder {         //rename
     private List<String> columnsReport;
-    private LinkedList<String> fields;
+    private List<String> fields;
     private List<Integer> numericFormat;
     private List<Integer> valueToNumeric;
     private String sheetName;
@@ -35,7 +34,7 @@ public class ReportFormatHolder {         //rename
         this.columnsReport = columnsReport;
     }
 
-    public void setFields(LinkedList<String> fields) {
+    public void setFields(List<String> fields) {
         this.fields = fields;
     }
 
@@ -51,7 +50,7 @@ public class ReportFormatHolder {         //rename
         return columnsReport;
     }
 
-    public LinkedList<String> getFields() {
+    public List<String> getFields() {
         return fields;
     }
 

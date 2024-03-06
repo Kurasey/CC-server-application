@@ -5,7 +5,6 @@ market-owner:
 actuator-manager:
   username: actuator_manager
   password: c8ed587a-6954-4ddf-87b2-a5164fdfd822
-
 spring:
   application:
     name: Report module
@@ -67,5 +66,5 @@ spring:
       enabled: true
   datasource:
     generate-unique-name: false
-    name: creatorcloud
-    url: jdbc:h2:mem:creatorcloud
+    name: ccModule
+    url: jdbc:h2:mem:ccModule

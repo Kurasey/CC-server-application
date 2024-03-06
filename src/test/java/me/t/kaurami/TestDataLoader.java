@@ -46,7 +46,4 @@ public class TestDataLoader {
         return fields;
     }
 
-    public static void main(String[] args) {
-        System.out.println(new TestDataLoader("C://TestData.txt").getSourceData());
-    }
 }

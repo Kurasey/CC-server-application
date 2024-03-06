@@ -32,7 +32,7 @@ public class StandardBookReader implements BookReader {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     @Override
-    public void loadBook(File file) throws IOException, NotValidWorkbookException {
+    public void loadBook(File file) throws IOException {
         logger.info("loading workbook...");
         try (FileInputStream inputStream = new FileInputStream(file)) {
             if (file.getName().contains(".xlsx")){
@@ -84,13 +84,13 @@ public class StandardBookReader implements BookReader {
     }
 
     @Override
-    public LinkedList<LinkedList<String>> readSheet(){
+    public List<List<String>> readSheet(){
         logger.info("reading sheet");
         setSheet();
-        LinkedList<LinkedList<String>> rowsValues = new LinkedList<>();
+        List<List<String>> rowsValues = new ArrayList<>();
         for (int i = 0; i <= sheet.getLastRowNum(); i++){
             row = sheet.getRow(i);
-            LinkedList<String> cellsValues = new LinkedList<>();
+            List<String> cellsValues = new ArrayList<>();
             for (int j = 0; j < row.getLastCellNum(); j++){
 /*                try {
                     cellsValues.add(extractStringCellValue(row.getCell(j)));
